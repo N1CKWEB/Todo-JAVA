@@ -1,29 +1,27 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Relaciones;
 
-import javax.swing.JOptionPane;
+import java.util.ArrayList;
+import java.util.Scanner;
 
-/**
- *
- * @author LENOVO
- */
 public class Comprobante {
+
+    protected static ArrayList<Comprobante> info1 = new ArrayList<>();
+    protected static ArrayList<Factura> info2 = new ArrayList<>();
+    protected static ArrayList<Fecha> info3 = new ArrayList<>();
+    protected static ArrayList<Cliente> info4 = new ArrayList<>();
+    protected static ArrayList<Producto> info5 = new ArrayList<>();
 
     private char tipo;
     private int numero;
     private Fecha fecha;
 
     //Constructor lleno
-    public Comprobante(int numero, char tipo) {
+    public Comprobante(char tipo, int numero) {
         this.tipo = tipo;
         this.numero = numero;
-
     }
-   
-//Constructor vacio 
+
+    //Constructor vacio 
     public Comprobante() {
 
     }
@@ -52,39 +50,47 @@ public class Comprobante {
         this.fecha = fecha;
     }
 
+    @Override
+    public String toString() {
+        return "Tipo: " + tipo + ", Número: " + numero;
+    }
+
     public static class Factura extends Comprobante {
 
         private float total;
-     private Cliente cliente;
+        private Cliente cliente;
+
         //Constructor lleno
         public Factura(float total) {
             super();
             this.total = total;
         }
-        
-       //Constructor vacio
-       public Factura(){
-           
-       }
- 
-        
-        public Cliente getCliente(){
-            
+
+        //Constructor vacio
+        public Factura() {
+
+        }
+
+        public Cliente getCliente() {
             return cliente;
-            
         }
-        public void setCliente(Cliente val){
-            
+
+        public void setCliente(Cliente val) {
+
         }
-        
+
         public float getTotal() {
             return total;
         }
 
-        public void setTotal(float val) {
-
+        public void setTotal(float total) {
+            this.total = total;
         }
-        
+
+        @Override
+        public String toString() {
+            return super.toString() + ", Total: " + total;
+        }
     }
 
     public static class Fecha extends Comprobante {
@@ -94,36 +100,45 @@ public class Comprobante {
         private int anio;
 
         //Constructor lleno
-        public Fecha(int dia,int mes,int anio) {
-             this.dia=dia;
-             this.mes=mes;
-             this.anio=anio;
+        public Fecha(int dia, int mes, int anio) {
+            this.dia = dia;
+            this.mes = mes;
+            this.anio = anio;
         }
+
         //Constructor vacio
-        public Fecha(){
-            
+        public Fecha() {
+
         }
-    public int getDia(){
-        return dia;
-    }
-    
-    public void setDia(int val){
-        
-    }
-    public int getMes(){
-        return mes;
-    }
-        
-    public void setMes(int val){
-        
-    }
-    public int getAnio(){
-        return anio;
-    }
-        
-    public void setAnio(int val){
-        
-    }
+
+        public int getDia() {
+            return dia;
+        }
+
+        public int getMes() {
+            return mes;
+        }
+
+        public int getAnio() {
+            return anio;
+        }
+
+        public void setDia(int dia) {
+            this.dia = dia;
+        }
+
+        public void setMes(int mes) {
+            this.mes = mes;
+        }
+
+        public void setAnio(int anio) {
+            this.anio = anio;
+        }
+
+        @Override
+        public String toString() {
+            return "Día: " + dia + ", Mes: " + mes + ", Año: " + anio;
+        }
     }
 
     public static class Cliente extends Comprobante {
@@ -136,26 +151,32 @@ public class Comprobante {
             this.codigo = codigo;
             this.razonSocial = razonSocial;
         }
+
         //Constructor vacio
-        public Cliente(){
-            
+        public Cliente() {
+
         }
+
         public int getCodigo() {
             return codigo;
-        }
-
-        public void setCodigo(int val) {
-
         }
 
         public String getRazonSocial() {
             return razonSocial;
         }
 
-        public void setRazonSocial(String val) {
-
+        public void setCodigo(int codigo) {
+            this.codigo = codigo;
         }
 
+        public void setRazonSocial(String razonSocial) {
+            this.razonSocial = razonSocial;
+        }
+
+        @Override
+        public String toString() {
+            return "Código: " + codigo + ", Razón Social: " + razonSocial;
+        }
     }
 
     public static class Producto extends Comprobante {
@@ -163,70 +184,141 @@ public class Comprobante {
         private int codigo;
         private String descripcion;
         private float precio;
-      
+
         //Constructor lleno
         public Producto(int codigo, String descripcion, float precio) {
             this.codigo = codigo;
             this.descripcion = descripcion;
             this.precio = precio;
         }
+
         //Constructor vacio
-        public Producto(){
-            
+        public Producto() {
+
         }
 
         public int getCodigo() {
             return codigo;
         }
 
-        public void setCodigo(int val) {
-
-        }
-
         public String getDescripcion() {
             return descripcion;
-        }
-
-        public void setDescripcion(String val) {
-
         }
 
         public float getPrecio() {
             return precio;
         }
 
-        public void setPrecio(float val) {
+        public void setCodigo(int codigo) {
+            this.codigo = codigo;
+        }
 
+        public void setDescripcion(String descripcion) {
+            this.descripcion = descripcion;
+        }
+
+        public void setPrecio(float precio) {
+            this.precio = precio;
+        }
+
+        @Override
+        public String toString() {
+            return "Código: " + codigo + ", Descripción: " + descripcion + ", Precio: " + precio;
         }
     }
 
-    public static void mostrarInformacion(){
-        Comprobante comprobante=new Comprobante(0012233,'F');
-        Factura factura=new Factura(1250);
-        Producto producto=new Producto(433456,"Paquete de galletas de OREO", (float) 49.99);
-        Cliente cliente=new Cliente(1001,"Oreo S.A");
-        Fecha fecha=new Fecha(24,05,2024);
+    public static void obtenerInformacionGlobal() {
+        Scanner nd = new Scanner(System.in);
 
-       //Mostrar información completa de todas las clases
-       JOptionPane.showMessageDialog(null,"El número del comprobante es: "+comprobante.getNumero());
-       JOptionPane.showMessageDialog(null,"El tipo del comprobante es: "+comprobante.getTipo());
-       JOptionPane.showMessageDialog(null,"El total de la factura: "+factura.getTotal());
-       JOptionPane.showMessageDialog(null,"El código del producto: "+producto.getCodigo());
-       JOptionPane.showMessageDialog(null,"La descripción del producto: "+producto.getDescripcion());
-       JOptionPane.showMessageDialog(null,"El precio del producto: "+producto.getPrecio());
-       JOptionPane.showMessageDialog(null,"El código del cliente: "+cliente.getCodigo());
-       JOptionPane.showMessageDialog(null,"La razon Social del cliente: "+cliente.getRazonSocial());
-       JOptionPane.showMessageDialog(null,"El dia es: "+fecha.getDia());
-       JOptionPane.showMessageDialog(null,"El mes es: "+fecha.getMes());
-       JOptionPane.showMessageDialog(null,"El año es: "+fecha.getAnio());
+        Comprobante comprobante = new Comprobante();
+        Factura factura = new Factura();
+        Fecha fecha = new Fecha();
+        Cliente cliente = new Cliente();
+        Producto producto = new Producto();
 
-              
+        int numero = comprobante.getNumero();
+        char tipo = comprobante.getTipo();
+        float total = factura.getTotal();
+        int dia = fecha.getDia();
+        int mes = fecha.getMes();
+        int anio = fecha.getAnio();
+        int codigo1 = cliente.getCodigo();
+        String razonSocial = cliente.getRazonSocial();
+        int codigo2 = producto.getCodigo();
+        String descripcion = producto.getDescripcion();
+        float precio = producto.getPrecio();
 
+        System.out.println("Ingresa el tipo: ");
+        tipo = nd.nextLine().charAt(0);
+
+        System.out.println("Ingresa el número: ");
+        numero = nd.nextInt();
+
+        System.out.println("Ingresa el día: ");
+        dia = nd.nextInt();
+
+        System.out.println("Ingresa el mes: ");
+        mes = nd.nextInt();
+
+        System.out.println("Ingresa el año: ");
+        anio = nd.nextInt();
+
+        System.out.println("Ingresa el código del cliente: ");
+        codigo1 = nd.nextInt();
+
+        // Consumir la nueva línea pendiente
+        nd.nextLine();
+
+        System.out.println("Ingresa la razon social del cliente:");
+        razonSocial = nd.nextLine();
+
+        System.out.println("Ingresa el código del producto: ");
+        codigo2 = nd.nextInt();
+
+        // Consumir la nueva línea pendiente
+        nd.nextLine();
+
+        System.out.println("Ingresa la descripción del producto:");
+        descripcion = nd.nextLine();
+
+        System.out.println("Ingresa el precio del producto: ");
+        precio = nd.nextFloat();
+
+        // Agregar los datos a los ArrayLists globales
+        info1.add(new Comprobante(tipo, numero));
+        info2.add(new Factura(total));
+        info3.add(new Fecha(dia, mes, anio));
+        info4.add(new Cliente(codigo1, razonSocial));
+        info5.add(new Producto(codigo2, descripcion, precio));
     }
-    public static void main(String[] args) {
 
-        mostrarInformacion();
-        
-        
+    public static void main(String[] args) {
+        obtenerInformacionGlobal();
+
+        // Imprimir los contenidos de los ArrayLists
+        System.out.println("Contenido de info1:");
+        for (Comprobante c : info1) {
+            System.out.println(c);
+        }
+
+        System.out.println("Contenido de info2:");
+        for (Factura f : info2) {
+            System.out.println(f);
+        }
+
+        System.out.println("Contenido de info3:");
+        for (Fecha fecha : info3) {
+            System.out.println(fecha);
+        }
+
+        System.out.println("Contenido de info4:");
+        for (Cliente cliente : info4) {
+            System.out.println(cliente);
+        }
+
+        System.out.println("Contenido de info5:");
+        for (Producto producto : info5) {
+            System.out.println(producto);
+        }
     }
 }
