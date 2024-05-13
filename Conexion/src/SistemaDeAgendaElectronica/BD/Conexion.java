@@ -1,8 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
-package SistemaDeAgendaElectronica;
+package SistemaDeAgendaElectronica.BD;
+
+
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,10 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author LENOVO
- */
+
 public class Conexion {
 
     String url = "jdbc:mysql://localhost:3306/sistema_agenda_electronica";
@@ -56,19 +51,12 @@ public class Conexion {
         }
     }
 
-    public void agregarUsuarioABD() {
-       
-    }
 
     public static void main(String[] args) {
         
-  
         Conexion conexion = new Conexion();
         conexion.conectar();
         
-            
-   
-
-   
+        
     }
 }
