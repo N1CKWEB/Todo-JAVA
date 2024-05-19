@@ -78,6 +78,8 @@ public class Encriptado {
         return hexString.toString();
     }
     
+    
+    
     public static void main(String[] args) {
         
     }

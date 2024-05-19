@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 public class Conexion {
 
     String url = "jdbc:mysql://localhost:3306/sistema_agenda_electronica";
-    String user = "BDNico";
+    String user = "root";
     String password = "";
     String driver = "com.mysql.cj.jdbc.Driver";
     Connection cx;
@@ -36,7 +36,7 @@ public class Conexion {
           
         } catch (ClassNotFoundException | SQLException e) {
 
-            JOptionPane.showMessageDialog(null, "NO CONECTO A BD");
+            JOptionPane.showMessageDialog(null, "NO CONECTO A BD"+e);
             Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, e);
 
         }
