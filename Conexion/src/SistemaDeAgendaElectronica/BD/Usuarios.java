@@ -4,6 +4,7 @@
  */
 package SistemaDeAgendaElectronica.BD;
 
+import SistemaDeAgendaElectronica.GUI.Ventana1;
 import java.sql.Connection;
 
 //Usuarios
@@ -30,17 +31,17 @@ public class Usuarios {
     
     public Boolean agregarRegistrarse(String 	nombredeusuario, String correo, String contraseña) {
   
-    // Comprobar si el nombre de usuario ya existe
-    if (existeNombreUsuario(nombredeusuario)) {
-        JOptionPane.showMessageDialog(null, "El nombre de usuario ya está en uso. Por favor, elige otro nombre.");
-        return false;
-    }
-
-    // Comprobar si el correo ya existe
-    if (existeCorreo(correo)) {
-        JOptionPane.showMessageDialog(null, "El correo electrónico ya está en uso. Por favor, utiliza otro correo.");
-        return false;
-    }
+//    // Comprobar si el nombre de usuario ya existe
+//    if (existeNombreUsuario(nombredeusuario)) {
+//        JOptionPane.showMessageDialog(null, "El nombre de usuario ya está en uso. Por favor, elige otro nombre.");
+//        return false;
+//    }
+//
+//    // Comprobar si el correo ya existe
+//    if (existeCorreo(correo)) {
+//        JOptionPane.showMessageDialog(null, "El correo electrónico ya está en uso. Por favor, utiliza otro correo.");
+//        return false;
+//    }
         try {
 
             String consulta = "INSERT INTO usuarios (nombredeusuario,correo,contraseña) VALUES (? , ? , ?)";
@@ -100,7 +101,7 @@ public class Usuarios {
     }
 
     public boolean existeNombreUsuario(String 	nombredeusuario) {
-    String consulta = "SELECT COUNT(*) FROM usuarios WHERE 	nombredeusuario = ?";
+    String consulta = "SELECT COUNT(*) FROM usuarios WHERE nombredeusuario = ?";
     boolean existe = false;
 
     try (
@@ -144,8 +145,13 @@ public class Usuarios {
 
     public static void main(String[] args) {
         Usuarios user = new Usuarios();
-
-        user.agregarRegistrarse("Enrique","franquito@gmail.com","123");
+        Ventana1 v1=new Ventana1();
+        
+        v1.setVisible(true);
+        v1.setLocationRelativeTo(null);
+        
+        
+//        user.agregarRegistrarse("Enrique","franquito@gmail.com","123");
        // user.existeNombreUsuario("Luis");
        // user.existeCorreo("franquito@gmail.com");
      }
