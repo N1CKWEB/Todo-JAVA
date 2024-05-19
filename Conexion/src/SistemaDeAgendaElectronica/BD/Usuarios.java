@@ -5,13 +5,12 @@
 package SistemaDeAgendaElectronica.BD;
 
 import SistemaDeAgendaElectronica.GUI.Ventana1;
+import javax.swing.JOptionPane;
 import java.sql.Connection;
-
-//Usuarios
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.swing.JOptionPane;
+import java.time.LocalDateTime;
 
 public class Usuarios {
 
@@ -140,7 +139,19 @@ public class Usuarios {
     return existe;
 }
 
-    
+    public ResultSet recuperacionCorreo(String usuario,String contraseña){
+        try {
+               String consulta="SELECT correo, contraseña FROM usuarios WHERE usuario = ? ";
+               instruccion=sl.prepareStatement(consulta);
+               instruccion.setString(1, usuario);
+               
+               resultado=instruccion.executeQuery();
+               return resultado;
+        } catch (SQLException e) {
+            System.out.println("El error es: "+e);
+            return resultado;
+        }
+    }
     
 
     public static void main(String[] args) {
