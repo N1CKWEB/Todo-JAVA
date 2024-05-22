@@ -160,25 +160,26 @@ public class Usuarios {
 
     return existe;
 }
-public boolean recuperarContraseña(String nombredeusuario) {
+public boolean recuperarContraseña(String correoDelDestinatario) {
         if (sl == null) {
             JOptionPane.showMessageDialog(null, "No hay conexión a la base de datos.");
             return false;
         }
         try {
-            String consulta = "SELECT contraseña FROM usuarios WHERE nombredeusuario = ?";
+            String consulta = "SELECT contraseña FROM usuarios WHERE correo = ?";
             instruccion = sl.prepareStatement(consulta);
-            instruccion.setString(1, nombredeusuario);
+            instruccion.setString(1, correoDelDestinatario);
 
             int longitud=23;
             String nuevaContraseña = generarContraseñaAleatoria(longitud);
-            actualizarContraseña(nombredeusuario, nuevaContraseña);
+            
+            actualizarContraseña(correoDelDestinatario, nuevaContraseña);
 
             String remitente = "nicolasdiazgarrido649@gmail.com"; 
             String password = "jddi rcfn vbdi cusb";
 
             EnviarCorreoElectronico correo = new EnviarCorreoElectronico(remitente, password);
-            correo.enviarGmail("Recuperación de contraseña:", nuevaContraseña, "marilidiagarrido10@gmail.com"); 
+            correo.enviarGmail("Recuperación de contraseña:", nuevaContraseña, correoDelDestinatario); 
 
             JOptionPane.showMessageDialog(null, "Se envió con éxito el correo electrónico.");
             JOptionPane.showMessageDialog(null, "Contraseña recuperada exitosamente!");
@@ -220,12 +221,12 @@ public boolean recuperarContraseña(String nombredeusuario) {
         return contraseña.toString();
     }
 
-    public boolean actualizarContraseña(String nombredeusuario, String nuevaContraseña) {
+    public boolean actualizarContraseña(String correoDelDestinatario, String nuevaContraseña) {
         try {
-            String consulta = "UPDATE usuarios SET contraseña = ? WHERE nombredeusuario = ?";
+            String consulta = "UPDATE usuarios SET contraseña = ? WHERE correo = ?";
             instruccion = sl.prepareStatement(consulta);
             instruccion.setString(1, nuevaContraseña);
-            instruccion.setString(2, nombredeusuario);
+            instruccion.setString(2, correoDelDestinatario);
             int modificacion = instruccion.executeUpdate();
             return modificacion > 0;
         } catch (SQLException e) {
@@ -235,12 +236,12 @@ public boolean recuperarContraseña(String nombredeusuario) {
     }
 
     public static void main(String[] args) {
-//        Usuarios user = new Usuarios();
-//        String nuevaContraseña = user.generarContraseñaAleatoria(10);
-//        user.recuperarContraseña("Mario");
-//        user.actualizarContraseña("Mario", nuevaContraseña);
-//
-//        user.cerrarConexion();
+Usuarios user = new Usuarios();
+String nuevaContraseña = user.generarContraseñaAleatoria(10);
+user.recuperarContraseña("Mario");
+        user.actualizarContraseña("Mario", nuevaContraseña);
+
+ user.cerrarConexion();
     }
 
     public void cerrarConexion() {

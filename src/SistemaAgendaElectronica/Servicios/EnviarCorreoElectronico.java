@@ -12,9 +12,9 @@ import javax.mail.internet.MimeMessage;
 
 public class EnviarCorreoElectronico {
 
-    private final String remitente;
-    private final String password;
-    private final Properties props;
+    public String remitente;
+    public String password;
+    public Properties props;
 
     public EnviarCorreoElectronico(String remitente, String password) {
         this.remitente = remitente;
@@ -25,6 +25,10 @@ public class EnviarCorreoElectronico {
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587"); // o 465 si usas SSL
+    }
+    
+    public EnviarCorreoElectronico(){
+        
     }
 
     public void enviarGmail(String asunto, String cuerpo, String destinatario) throws AddressException, MessagingException {

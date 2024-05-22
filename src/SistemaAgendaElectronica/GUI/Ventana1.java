@@ -6,6 +6,10 @@ package SistemaAgendaElectronica.GUI;
 
 import SistemaAgendaElectronica.Servicios.Encriptado;
 import SistemaAgendaElectronica.BD.Usuarios;
+import SistemaAgendaElectronica.Servicios.EnviarCorreoElectronico;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.mail.MessagingException;
 import javax.swing.JOptionPane;
 
 /**
@@ -70,7 +74,7 @@ public class Ventana1 extends javax.swing.JFrame {
 
         lbUsuarioSesion.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         lbUsuarioSesion.setForeground(new java.awt.Color(0, 204, 204));
-        lbUsuarioSesion.setText("USUARIO");
+        lbUsuarioSesion.setText("CORREO");
 
         txtUSuarioSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -325,26 +329,32 @@ public class Ventana1 extends javax.swing.JFrame {
         this.setVisible(false);
         v2.setLocationRelativeTo(null);
 
-     
 
     }//GEN-LAST:event_btnAgendaSesionActionPerformed
 
     private void btnRecuperarContraseñaSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecuperarContraseñaSesionActionPerformed
 
-        
-        String nombreDeUsuario=txtUSuarioSesion.getText();
-        String contraseña=txtContraseñaSesion.getText();
-        
-        String newUsuario=JOptionPane.showInputDialog("Ingresa el usuario: ");
-        if (newUsuario == null ? nombreDeUsuario == null : newUsuario.equals(nombreDeUsuario)) {
-            JOptionPane.showMessageDialog(null,"!Recuperación de contraseña correcto!");
-            JOptionPane.showMessageDialog(null, "La contraseña es:"+contraseña);
-        }else{
-            JOptionPane.showMessageDialog(null,"Usuario incorrecto!!!");
+        String remitente = "nicolasdiazgarrido649@gmail.com"; 
+            String password = "jddi rcfn vbdi cusb";
+        EnviarCorreoElectronico correo = new EnviarCorreoElectronico( remitente,password );
+        Usuarios user = new Usuarios();
+        int longitud = 23;
+        String contraseña = txtContraseñaSesion.getText();
+        String destinatario = JOptionPane.showInputDialog("Introduce tu gmail, para recuperar la contraseña");
+        String nuevaContraseña = user.generarContraseñaAleatoria(longitud);
+        user.recuperarContraseña(destinatario);
+        user.actualizarContraseña(destinatario, nuevaContraseña);
+        try {
+            correo.enviarGmail("Recuperación de contraseña: ",nuevaContraseña, destinatario);
+            JOptionPane.showMessageDialog(null, " ☑ ️!Se envió con éxito el correo electrónico. ☑ ");
+            JOptionPane.showMessageDialog(null, "☑  !Contraseña recuperada exitosamente! ☑ ");
+            
+        } catch (MessagingException ex) {
+            Logger.getLogger(Ventana1.class.getName()).log(Level.SEVERE, null, ex);
         }
-     
-      txtUSuarioSesion.setText(null);
-      txtContraseñaSesion.setText(null);
+
+        txtUSuarioSesion.setText(null);
+        txtContraseñaSesion.setText(null);
     }//GEN-LAST:event_btnRecuperarContraseñaSesionActionPerformed
 
     private void btnEncriptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncriptarActionPerformed
@@ -358,7 +368,7 @@ public class Ventana1 extends javax.swing.JFrame {
         txtUSuarioRegistrarse.setText(null);
         txtContraseñaRegistrarse.setText(null);
         txtCorreoRegistrarse.setText(null);
-        
+
         btnAgendaRegistrarte.setEnabled(true);
 
     }//GEN-LAST:event_btnEncriptarActionPerformed
@@ -375,45 +385,45 @@ public class Ventana1 extends javax.swing.JFrame {
 
     private void btnRegistrarteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarteActionPerformed
 
-         Ventana2 v2 = new Ventana2();
+        Ventana2 v2 = new Ventana2();
         Usuarios user = new Usuarios();
         Encriptado encriptar = new Encriptado();
-        
+
         String usuario = txtUSuarioRegistrarse.getText().trim();
         String correo = txtCorreoRegistrarse.getText();
         String contraseña = txtContraseñaRegistrarse.getText();
 
         user.agregarRegistrarse(usuario, correo, contraseña);
         encriptar.validarContraseña(contraseña);
-              
+
         btnEncriptar.setEnabled(true);
-        
+
     }//GEN-LAST:event_btnRegistrarteActionPerformed
 
     private void txtUSuarioRegistrarseKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUSuarioRegistrarseKeyReleased
         if (!txtUSuarioRegistrarse.getText().isEmpty()) {
             btnRegistrarte.setEnabled(true);
-        }else{
+        } else {
             btnRegistrarte.setEnabled(false);
-            
+
         }
     }//GEN-LAST:event_txtUSuarioRegistrarseKeyReleased
 
     private void txtCorreoRegistrarseKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCorreoRegistrarseKeyReleased
-    if (!txtCorreoRegistrarse.getText().isEmpty()) {
+        if (!txtCorreoRegistrarse.getText().isEmpty()) {
             btnRegistrarte.setEnabled(true);
-        }else{
+        } else {
             btnRegistrarte.setEnabled(false);
-            
+
         }
     }//GEN-LAST:event_txtCorreoRegistrarseKeyReleased
 
     private void txtContraseñaRegistrarseKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtContraseñaRegistrarseKeyReleased
-    if (!txtContraseñaRegistrarse.getText().isEmpty()) {
+        if (!txtContraseñaRegistrarse.getText().isEmpty()) {
             btnRegistrarte.setEnabled(true);
-        }else{
+        } else {
             btnRegistrarte.setEnabled(false);
-            
+
         }
 
     }//GEN-LAST:event_txtContraseñaRegistrarseKeyReleased
@@ -423,20 +433,20 @@ public class Ventana1 extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUSuarioSesionActionPerformed
 
     private void txtUSuarioSesionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUSuarioSesionKeyReleased
-         if (!txtUSuarioSesion.getText().isEmpty()) {
-         btnIniciarSesion.setEnabled(true);
-         
-        }else{
-         btnIniciarSesion.setEnabled(false);
-         }
+        if (!txtUSuarioSesion.getText().isEmpty()) {
+            btnIniciarSesion.setEnabled(true);
+
+        } else {
+            btnIniciarSesion.setEnabled(false);
+        }
     }//GEN-LAST:event_txtUSuarioSesionKeyReleased
 
     private void txtContraseñaSesionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtContraseñaSesionKeyReleased
-         if (!txtContraseñaSesion.getText().isEmpty()) {
-             btnIniciarSesion.setEnabled(true);
-        }else{
-             btnIniciarSesion.setEnabled(false);
-         }
+        if (!txtContraseñaSesion.getText().isEmpty()) {
+            btnIniciarSesion.setEnabled(true);
+        } else {
+            btnIniciarSesion.setEnabled(false);
+        }
     }//GEN-LAST:event_txtContraseñaSesionKeyReleased
 
     private void txtContraseñaSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContraseñaSesionActionPerformed
@@ -444,21 +454,21 @@ public class Ventana1 extends javax.swing.JFrame {
     }//GEN-LAST:event_txtContraseñaSesionActionPerformed
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
-        Usuarios user=new Usuarios();
+        Usuarios user = new Usuarios();
 
-      String usuario=txtUSuarioSesion.getText();
-      String contraseña=txtContraseñaSesion.getText();
-                  
+        String usuario = txtUSuarioSesion.getText();
+        String contraseña = txtContraseñaSesion.getText();
+
         user.verificacionInicioDeSesion(usuario, contraseña);
-        
+
         btnAgendaSesion.setEnabled(true);
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
     private void btnAgendaRegistrarteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgendaRegistrarteActionPerformed
-         Ventana2 v2 = new Ventana2(); 
-           v2.setVisible(true);
-          this.setVisible(false);
-           v2.setLocationRelativeTo(null);
+        Ventana2 v2 = new Ventana2();
+        v2.setVisible(true);
+        this.setVisible(false);
+        v2.setLocationRelativeTo(null);
 
     }//GEN-LAST:event_btnAgendaRegistrarteActionPerformed
 
