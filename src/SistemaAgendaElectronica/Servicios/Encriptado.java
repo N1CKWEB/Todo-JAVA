@@ -82,5 +82,9 @@ public class Encriptado {
     
     public static void main(String[] args) {
         
+//        
+//        Encriptado encriptar=new Encriptado();
+//        
+//        encriptar.encriptarContraseña(contraseña);
     }
 }
