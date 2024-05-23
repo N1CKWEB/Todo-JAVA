@@ -204,6 +204,8 @@ public class Ventana extends javax.swing.JFrame {
       txtUsuario.setText(null);
          txtContraseña.setText(null);     
 
+         
+         
 
     }//GEN-LAST:event_btnEncriptarActionPerformed
 

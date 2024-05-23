@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 //El botón registrarse valida la contraseña.(validar clave).
 //El botón encriptar, encripta la contraseña y la muestra 
 //El botón Recuperar contraseña solicita ingrese una nueva contraseña y confirmarla.
+
 public class Logica {
 
     private String usuario, contraseña;
