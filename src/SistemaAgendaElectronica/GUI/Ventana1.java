@@ -7,6 +7,7 @@ package SistemaAgendaElectronica.GUI;
 import SistemaAgendaElectronica.Servicios.Encriptado;
 import SistemaAgendaElectronica.BD.Usuarios;
 import SistemaAgendaElectronica.Servicios.EnviarCorreoElectronico;
+import SistemaAgendaElectronica.Servicios.InicioDeSesion;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.MessagingException;
@@ -147,7 +148,7 @@ public class Ventana1 extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(42, 42, 42)
+                        .addGap(35, 35, 35)
                         .addComponent(btnAgendaSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -334,9 +335,9 @@ public class Ventana1 extends javax.swing.JFrame {
 
     private void btnRecuperarContraseñaSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecuperarContraseñaSesionActionPerformed
 
-        String remitente = "nicolasdiazgarrido649@gmail.com"; 
-            String password = "jddi rcfn vbdi cusb";
-        EnviarCorreoElectronico correo = new EnviarCorreoElectronico( remitente,password );
+        String remitente = "nicolasdiazgarrido649@gmail.com";
+        String password = "jddi rcfn vbdi cusb";
+        EnviarCorreoElectronico correo = new EnviarCorreoElectronico(remitente, password);
         Usuarios user = new Usuarios();
         int longitud = 23;
         String contraseña = txtContraseñaSesion.getText();
@@ -345,10 +346,10 @@ public class Ventana1 extends javax.swing.JFrame {
         user.recuperarContraseña(destinatario);
         user.actualizarContraseña(destinatario, nuevaContraseña);
         try {
-            correo.enviarGmail("Recuperación de contraseña: ",nuevaContraseña, destinatario);
+            correo.enviarGmail("Recuperación de contraseña: ", nuevaContraseña, destinatario);
             JOptionPane.showMessageDialog(null, " ☑ ️!Se envió con éxito el correo electrónico. ☑ ");
             JOptionPane.showMessageDialog(null, "☑  !Contraseña recuperada exitosamente! ☑ ");
-            
+
         } catch (MessagingException ex) {
             Logger.getLogger(Ventana1.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -393,10 +394,23 @@ public class Ventana1 extends javax.swing.JFrame {
         String correo = txtCorreoRegistrarse.getText();
         String contraseña = txtContraseñaRegistrarse.getText();
 
-        user.agregarRegistrarse(usuario, correo, contraseña);
         encriptar.validarContraseña(contraseña);
+        user.elCorreEsValidoParaRegistrarse(correo);
+        user.correoExisteDeRegistrarse(correo);
+        user.nombreDeUSuarioExisteDeRegistrarse(usuario);
+        user.contraseñaExisteDeRegistrarse(contraseña);
 
-        btnEncriptar.setEnabled(true);
+        if (user.verificacionDeRegistrarse(correo, usuario, contraseña)) {
+            user.agregarRegistrarse(usuario, correo, contraseña);
+            JOptionPane.showMessageDialog(null, "¡Usuario registrado exitosamente!");
+            btnEncriptar.setEnabled(true);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Usuario no registrado es igual a un usuario ya guardado en la BD");
+            btnEncriptar.setEnabled(false);
+
+        }
+
 
     }//GEN-LAST:event_btnRegistrarteActionPerformed
 
@@ -455,11 +469,10 @@ public class Ventana1 extends javax.swing.JFrame {
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
         Usuarios user = new Usuarios();
-
-        String usuario = txtUSuarioSesion.getText();
+        String correo = txtUSuarioSesion.getText();
         String contraseña = txtContraseñaSesion.getText();
 
-        user.verificacionInicioDeSesion(usuario, contraseña);
+        user.elCorreoEsValidoParaIniciarSesion(correo);
 
         btnAgendaSesion.setEnabled(true);
     }//GEN-LAST:event_btnIniciarSesionActionPerformed

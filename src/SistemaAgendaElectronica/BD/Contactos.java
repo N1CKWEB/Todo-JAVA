@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 public class Contactos {
 
     Boolean logueado = null;
-    PreparedStatement instruccion = null;
+    PreparedStatement instruccion;
     ResultSet resultado = null;
     Boolean registrado = null;
     Conexion conexion = new Conexion();
@@ -175,12 +175,13 @@ public boolean modificarContacto(String dni, String nombre, String apellido, Str
 
     public static void main(String[] args) {
 
-        Contactos contactos = new Contactos();
+       // Contactos contactos = new Contactos();
 
         //contactos.agregarContactos("46327750","Nicolás","Díaz","nicolasdiazgarrido@gmail.com","Luzuariga 8421","Maipu");
         //contactos.consultarContacto("46327750","Nicolás");
-        contactos.modificarContacto("46327750", "Emilio", "Díaz", "nicolaszgaxxxrrido649@gmail.com", "Luzuariga 3319 23", "Acongua 111");
+        //contactos.modificarContacto("46327750", "Emilio", "Díaz", "nicolaszgarrido649@gmail.com", "Luzuariga 3319 23", "Acongua 111");
         //contactos.eliminarContacto("46327750", "Emilio");
+        
     }
 
 }

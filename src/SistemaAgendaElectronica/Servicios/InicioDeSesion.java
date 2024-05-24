@@ -4,6 +4,16 @@
  */
 package SistemaAgendaElectronica.Servicios;
 
+
+import SistemaAgendaElectronica.BD.Conexion;
+import java.sql.ResultSet;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+
 /**
  *
  * @author LENOVO
@@ -13,6 +23,13 @@ public class InicioDeSesion {
     private String contraseña;
     private String correo;
 
+       private PreparedStatement instruccion;
+    private static java.sql.Connection sl;
+     Boolean logueado = null;
+    ResultSet resultado = null;
+    Boolean registrado = null;
+    boolean existe = false;
+    Conexion conexion = new Conexion();
     
     public InicioDeSesion(String usuario, char[] contraseña, String correo) {
 
@@ -21,11 +38,9 @@ public class InicioDeSesion {
         this.correo = correo;
     }
     
-    
-    public InicioDeSesion(String user, String pass, String correo) {
-        this.usuario = usuario;
-        this.contraseña = contraseña;
-        this.correo = correo;
+       
+    public InicioDeSesion(){
+        
     }
     
     
@@ -54,6 +69,11 @@ public class InicioDeSesion {
         this.correo = correo;
     }
     
+
+     
+     public static void main(String[] args) {
+        
+    }
     
     
 }

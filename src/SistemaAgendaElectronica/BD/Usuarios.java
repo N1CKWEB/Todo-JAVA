@@ -6,7 +6,6 @@ package SistemaAgendaElectronica.BD;
 
 import SistemaAgendaElectronica.Servicios.EnviarCorreoElectronico;
 import java.sql.ResultSet;
- import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -16,26 +15,25 @@ import javax.swing.JOptionPane;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.DriverManager;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Usuarios {
-    
+
     private PreparedStatement instruccion;
     private static java.sql.Connection sl;
-     Boolean logueado = null;
+    Boolean logueado = null;
     ResultSet resultado = null;
     Boolean registrado = null;
     boolean existe = false;
     Conexion conexion = new Conexion();
     private static final String[] mayusculas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-    private static final String[] minusculas = "abcdefghijklmnopqrstuvwyz".split("");  
+    private static final String[] minusculas = "abcdefghijklmnopqrstuvwyz".split("");
     private static final String[] numeros = "123456789101112".split("");
-    private static final String[] caracteresEspeciales="!@#$%^&*()_-+={}[]|;:<>,.?/~".split("");
+    private static final String[] caracteresEspeciales = "!@#$%^&*()_-+={}[]|;:<>,.?/~".split("");
 
-    
-    
-    
     public Usuarios() {
-         try {
+        try {
             String url = "jdbc:mysql://localhost:3306/sistema_agenda_electronica";
             String usuario = "root";
             String contraseña = "";
@@ -47,11 +45,9 @@ public class Usuarios {
         }
     }
 
-    
     //METODOS DE USUARIO PARA INICIAR SESION Y REGISTRARSE
-    
-    public Boolean agregarRegistrarse(String 	nombredeusuario, String correo, String contraseña) {
-  
+    public Boolean agregarRegistrarse(String nombredeusuario, String correo, String contraseña) {
+
 //    // Comprobar si el nombre de usuario ya existe
 //    if (existeNombreUsuario(nombredeusuario)) {
 //        JOptionPane.showMessageDialog(null, "El nombre de usuario ya está en uso. Por favor, elige otro nombre.");
@@ -68,7 +64,7 @@ public class Usuarios {
             String consulta = "INSERT INTO usuarios (nombredeusuario,correo,contraseña) VALUES (? , ? , ?)";
             instruccion = sl.prepareStatement(consulta);
 
-            instruccion.setString(1,nombredeusuario);
+            instruccion.setString(1, nombredeusuario);
             instruccion.setString(2, correo);
             instruccion.setString(3, contraseña);
 
@@ -83,18 +79,23 @@ public class Usuarios {
 
             registrado = false;
             return registrado;
-        } 
+        }
     }
 
-    public Boolean verificacionInicioDeSesion(String nombredeusuario, String contraseña) {
+    public Boolean verificacionInicioDeSesion(String correo, String contraseña) {
+
+        if (!elCorreoEsValidoParaIniciarSesion(correo)) {
+            JOptionPane.showMessageDialog(null, "El correo no es valido. Debe contener '@' y terminar 'gmail.com'");
+            return false;
+        }
 
         try {
 
-            String query = "SELECT * FROM usuarios WHERE nombredeusuario = ? AND contraseña = ?";
+            String query = "SELECT * FROM usuarios WHERE correo = ? AND contraseña = ?";
 
             instruccion = sl.prepareStatement(query);
 
-            instruccion.setString(1, nombredeusuario);
+            instruccion.setString(1, correo);
             instruccion.setString(2, contraseña);
 
             //guardamos el resultado de la busqueda
@@ -118,49 +119,129 @@ public class Usuarios {
 
             System.out.println("  !ERROR!  " + e);
             return false;
-        } 
-    }
-
-    public boolean existeNombreUsuario(String 	nombredeusuario) {
-    String consulta = "SELECT COUNT(*) FROM usuarios WHERE nombredeusuario = ?";
-    boolean existe = false;
-
-    try (
-         PreparedStatement ps = sl.prepareStatement(consulta)) {
-        ps.setString(1,nombredeusuario);
-        try (ResultSet rs = ps.executeQuery()) {
-            if (rs.next()) {
-                existe = rs.getInt(1) > 0;
-            }
         }
-                System.out.println("Si existe el usuario: "+nombredeusuario+" use otro usuario por favor");
-
-    } catch (SQLException e) {
-        System.out.println("El error es:"+e);
     }
 
-    return existe;
-}
-    public boolean existeCorreo (String correo) {
-    String consulta = "SELECT COUNT(*) FROM usuarios WHERE correo = ?";
-    boolean existe = false;
+    public boolean elCorreoEsValidoParaIniciarSesion(String correo) {
+        String regex = "^[\\w-\\.]+@((gmail\\.com))$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(correo);
 
-    try (
-         PreparedStatement ps = sl.prepareStatement(consulta)) {
-        ps.setString(1, correo);
-        try (ResultSet rs = ps.executeQuery()) {
-            if (rs.next()) {
-                existe = rs.getInt(1) > 0;
-            }
+        return matcher.matches();
+    }
+
+    public boolean verificacionDeRegistrarse(String correo, String nombredeusuario, String contraseña) {
+
+        // Verificar si el correo es válido
+        if (!elCorreEsValidoParaRegistrarse(correo)) {
+            JOptionPane.showMessageDialog(null, "El correo no es válido. Debe contener '@' y terminar en 'gmail.com'");
+            return false;
         }
-        System.out.println("Si existe el correo: "+correo+" use otro correo por favor");
-    } catch (SQLException e) {
-        System.out.println("El error es:"+e);
+
+        // Verificar si el correo ya existe
+        if (correoExisteDeRegistrarse(correo)) {
+            JOptionPane.showMessageDialog(null, "El correo ya está registrado");
+            return false;
+        }
+
+        // Verificar si el nombre de usuario ya existe
+        if (nombreDeUSuarioExisteDeRegistrarse(nombredeusuario)) {
+            JOptionPane.showMessageDialog(null, "El nombre de usuario ya está registrado");
+            return false;
+        }
+
+        // Verificar si el nombre de usuario ya existe
+        if (contraseñaExisteDeRegistrarse(contraseña)) {
+            JOptionPane.showMessageDialog(null, "El nombre de usuario ya está registrado");
+            return false;
+        }
+
+        try (PreparedStatement instruccion = sl.prepareStatement("SELECT 1 FROM usuarios WHERE correo = ? AND nombredeusuario = ? AND contraseña = ?")) {
+
+            instruccion.setString(1, correo);
+            instruccion.setString(2, nombredeusuario);
+            instruccion.setString(3, contraseña);
+
+            try (ResultSet resultado = instruccion.executeQuery()) {
+                if (resultado.next()) {
+                    JOptionPane.showMessageDialog(null, "El usuario con este correo, nombre de usuario y contraseña ya está registrado.");
+                    return false;
+                }
+            }
+
+            // Si no se encontró un usuario existente, se procede a registrarlo
+            try (PreparedStatement insertInstruccion = sl.prepareStatement("INSERT INTO usuarios (correo, nombredeusuario, contraseña) VALUES (?, ?, ?)")) {
+
+                insertInstruccion.setString(1, correo);
+                insertInstruccion.setString(2, nombredeusuario);
+                insertInstruccion.setString(3, contraseña);
+                insertInstruccion.executeUpdate();
+            }
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println("El error es: " + e);
+            return false;
+        }
     }
 
-    return existe;
-}
-public boolean recuperarContraseña(String correoDelDestinatario) {
+    public boolean elCorreEsValidoParaRegistrarse(String correo) {
+        String regex = "^[\\w-\\.]+@((gmail\\.com))$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(correo);
+        return matcher.matches();
+    }
+
+    public boolean correoExisteDeRegistrarse(String correo) {
+        try {
+            String consulta = "SELECT 1 FROM usuarios WHERE correo = ?";
+            instruccion = sl.prepareStatement(consulta);
+
+            instruccion.setString(1, correo);
+            resultado = instruccion.executeQuery();
+
+            return resultado.next();
+
+        } catch (SQLException e) {
+            System.out.println("EL error es: " + e);
+            return false;
+        }
+
+    }
+
+    public boolean nombreDeUSuarioExisteDeRegistrarse(String nombredeusuario) {
+        try {
+            String consulta = "SELECT 1 FROM usuarios WHERE nombredeusuario = ?";
+            instruccion = sl.prepareStatement(consulta);
+
+            instruccion.setString(1, nombredeusuario);
+            resultado = instruccion.executeQuery();
+
+            return resultado.next();
+        } catch (SQLException e) {
+            System.out.println("EL error es: " + e);
+            return false;
+        }
+    }
+
+    public boolean contraseñaExisteDeRegistrarse(String contraseña) {
+
+        try {
+            String consulta = "SELECT 1 FROM usuarios WHERE contraseña = ?";
+            instruccion = sl.prepareStatement(consulta);
+
+            instruccion.setString(1, contraseña);
+            resultado = instruccion.executeQuery();
+
+            return resultado.next();
+
+        } catch (SQLException e) {
+            System.out.println("El error es: " + e);
+            return false;
+        }
+    }
+
+    public boolean recuperarContraseña(String correoDelDestinatario) {
         if (sl == null) {
             JOptionPane.showMessageDialog(null, "No hay conexión a la base de datos.");
             return false;
@@ -170,16 +251,16 @@ public boolean recuperarContraseña(String correoDelDestinatario) {
             instruccion = sl.prepareStatement(consulta);
             instruccion.setString(1, correoDelDestinatario);
 
-            int longitud=23;
+            int longitud = 23;
             String nuevaContraseña = generarContraseñaAleatoria(longitud);
-            
+
             actualizarContraseña(correoDelDestinatario, nuevaContraseña);
 
-            String remitente = "nicolasdiazgarrido649@gmail.com"; 
+            String remitente = "nicolasdiazgarrido649@gmail.com";
             String password = "jddi rcfn vbdi cusb";
 
             EnviarCorreoElectronico correo = new EnviarCorreoElectronico(remitente, password);
-            correo.enviarGmail("Recuperación de contraseña:", nuevaContraseña, correoDelDestinatario); 
+            correo.enviarGmail("Recuperación de contraseña:", nuevaContraseña, correoDelDestinatario);
 
             JOptionPane.showMessageDialog(null, "Se envió con éxito el correo electrónico.");
             JOptionPane.showMessageDialog(null, "Contraseña recuperada exitosamente!");
@@ -236,12 +317,12 @@ public boolean recuperarContraseña(String correoDelDestinatario) {
     }
 
     public static void main(String[] args) {
-Usuarios user = new Usuarios();
-String nuevaContraseña = user.generarContraseñaAleatoria(10);
-user.recuperarContraseña("Mario");
+        Usuarios user = new Usuarios();
+        String nuevaContraseña = user.generarContraseñaAleatoria(10);
+        user.recuperarContraseña("Mario");
         user.actualizarContraseña("Mario", nuevaContraseña);
 
- user.cerrarConexion();
+        user.cerrarConexion();
     }
 
     public void cerrarConexion() {
@@ -251,8 +332,8 @@ user.recuperarContraseña("Mario");
             }
         } catch (SQLException ex) {
             Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
-        
+
         }
-    
+
     }
 }
