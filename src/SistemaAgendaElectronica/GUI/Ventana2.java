@@ -5,6 +5,9 @@
 package SistemaAgendaElectronica.GUI;
 
 import SistemaAgendaElectronica.BD.Contactos;
+import SistemaAgendaElectronica.BD.Usuarios;
+import SistemaAgendaElectronica.Servicios.Encriptado;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -634,7 +637,7 @@ public class Ventana2 extends javax.swing.JFrame {
 
     private void btnAgregarContactoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarContactoActionPerformed
         Contactos contactos=new Contactos();
-
+        
         String dni=txtAgregarDni.getText();
         String nombre=txtAgregarNombre.getText();
         String apellido=txtAgregarApellido.getText();
@@ -650,6 +653,22 @@ public class Ventana2 extends javax.swing.JFrame {
         txtAgregarCorreo.setText(null);
         txtAgregarDireccion.setText(null);
         txtAgregarLocalidad.setText(null);
+        
+        
+        contactos.elDniEsValidoParaContacto(dni);
+        contactos.elCorreoEsValidoParaContacto(correo);
+        contactos.elCorreoExisteParaContacto(correo);
+        contactos.elDniExisteParaContacto(dni);
+
+        if (contactos.verificacionDeContacto(dni, correo)) {
+        contactos.agregarContactos(dni, nombre, apellido, correo, direccion, localidad);
+        JOptionPane.showMessageDialog(null, "¡Contacto registrado exitosamente!");
+       
+       } else {
+        JOptionPane.showMessageDialog(null, "Contacto no registrado");
+       btnAgregarContacto.setEnabled(false);
+       }
+
 
     }//GEN-LAST:event_btnAgregarContactoActionPerformed
 

@@ -394,13 +394,11 @@ public class Ventana1 extends javax.swing.JFrame {
             v2.setVisible(true);
             this.setVisible(false);
         } else {
-            JOptionPane.showMessageDialog(null, "Usuario no registrado es igual a un usuario ya guardado en la BD");
+            JOptionPane.showMessageDialog(null, "Usuario no registrado");
             btnEncriptar.setEnabled(false);
             txtUSuarioRegistrarse.setText(usuario); 
             txtCorreoRegistrarse.setText(usuario);
             txtContraseñaRegistrarse.setText(contraseña);
-            
-
         }
      
 

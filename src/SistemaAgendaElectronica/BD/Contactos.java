@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 public class Contactos {
@@ -115,37 +117,36 @@ public class Contactos {
         }
     }
 
-public boolean modificarContacto(String dni, String nombre, String apellido, String correo, String direccion, String localidad, String dniUsuario) {
+    public boolean modificarContacto(String dni, String nombre, String apellido, String correo, String direccion, String localidad, String dniUsuario) {
 
-    String consulta = "UPDATE contactosdeusuarios SET nombre = ?, apellido = ?, correo = ?, direccion = ?, localidad = ?, dni= ? WHERE dni = ?";
-  
-    PreparedStatement instruccion = null;
-    boolean actualizado = false;
+        String consulta = "UPDATE contactosdeusuarios SET nombre = ?, apellido = ?, correo = ?, direccion = ?, localidad = ?, dni= ? WHERE dni = ?";
 
-    try {
-        instruccion = sl.prepareStatement(consulta);
-        instruccion.setString(1, nombre);
-        instruccion.setString(2, apellido);
-        instruccion.setString(3, correo);
-        instruccion.setString(4, direccion);
-        instruccion.setString(5, localidad);
-        instruccion.setString(6, dni);
-        instruccion.setString(7, dniUsuario);
+        PreparedStatement instruccion = null;
+        boolean actualizado = false;
 
-        int filasAfectadas = instruccion.executeUpdate();
-        if (filasAfectadas > 0) {
-            JOptionPane.showMessageDialog(null, "Contacto modificado correctamente.");
-            actualizado = true;
-        } else {
-            JOptionPane.showMessageDialog(null, "No se encontró un contacto con el DNI especificado.");
+        try {
+            instruccion = sl.prepareStatement(consulta);
+            instruccion.setString(1, nombre);
+            instruccion.setString(2, apellido);
+            instruccion.setString(3, correo);
+            instruccion.setString(4, direccion);
+            instruccion.setString(5, localidad);
+            instruccion.setString(6, dni);
+            instruccion.setString(7, dniUsuario);
+
+            int filasAfectadas = instruccion.executeUpdate();
+            if (filasAfectadas > 0) {
+                JOptionPane.showMessageDialog(null, "Contacto modificado correctamente.");
+                actualizado = true;
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró un contacto con el DNI especificado.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al modificar el contacto: " + e.getMessage());
         }
-    } catch (SQLException e) {
-        System.out.println("Error al modificar el contacto: " + e.getMessage());
+
+        return actualizado;
     }
-
-    return actualizado;
-}
-
 
     public boolean eliminarContacto(String dni, String nombre) {
 
@@ -174,15 +175,115 @@ public boolean modificarContacto(String dni, String nombre, String apellido, Str
         return eliminado;
     }
 
+    public boolean verificacionDeContacto(String dni, String correo) {
+
+        if (!elDniEsValidoParaContacto(dni)) {
+            JOptionPane.showMessageDialog(null, "El dni no es valido, no contiene entre 8 y 9 dígitos");
+            return false;
+        }
+
+        if (!elCorreoEsValidoParaContacto(correo)) {
+            JOptionPane.showMessageDialog(null, "El correo no es valido, no contiene '@' y el 'gmail.com' ");
+            return false;
+        }
+        if (elCorreoExisteParaContacto(correo)) {
+            JOptionPane.showMessageDialog(null, "El correo ya existe en contactos");
+            return false;
+        }
+
+        if (elDniExisteParaContacto(dni)) {
+            JOptionPane.showMessageDialog(null, "El dni ya existe en contacto");
+            return false;
+        }
+
+        try {
+            String consulta = "SELECT 1 FROM contactosdeusuarios WHERE dni = ? AND correo = ?";
+
+            instruccion = sl.prepareStatement(consulta);
+
+            instruccion.setString(1, dni);
+            instruccion.setString(2, correo);
+
+            try (ResultSet resultado = instruccion.executeQuery()) {
+                if (resultado.next()) {
+                    JOptionPane.showMessageDialog(null, "El usuario con este correo, nombre de usuario y contraseña ya está registrado.");
+                    return false;
+                }
+            }
+            // Si no se encontró un usuario existente, se procede a registrarlo
+            try (PreparedStatement insertInstruccion = sl.prepareStatement("INSERT INTO contactosdeusuario (dni , correo) VALUES (? , ? ")) {
+
+                insertInstruccion.setString(1, dni);
+                insertInstruccion.setString(2, correo);
+                insertInstruccion.executeUpdate();
+            }
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println("El error es: " + e);
+            return false;
+        }
+    }
+
+    public boolean elDniEsValidoParaContacto(String dni) {
+
+        if (dni.length() == 8 || dni.length() == 9) {
+            JOptionPane.showMessageDialog(null, "El dni es valido");
+
+        }
+        return true;
+    }
+
+    public boolean elCorreoEsValidoParaContacto(String correo) {
+        String regex = "^[\\w-\\.]+@((gmail\\.com))$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(correo);
+
+        return matcher.matches();
+    }
+
+    public boolean elCorreoExisteParaContacto(String correo) {
+
+        try {
+            String consulta = "SELECT 1 FROM contactosdeusuarios WHERE correo = ?";
+
+            instruccion = sl.prepareStatement(consulta);
+
+            instruccion.setString(1, correo);
+
+            resultado = instruccion.executeQuery();
+
+            return resultado.next();
+        } catch (SQLException e) {
+            System.out.println("El error es: " + e);
+            return false;
+        }
+    }
+
+    public boolean elDniExisteParaContacto(String dni) {
+
+        try {
+            String consulta = "SELECT 1 FROM contactosdeusuarios WHERE dni = ?";
+
+            instruccion = sl.prepareStatement(consulta);
+            instruccion.setString(1, dni);
+
+            resultado = instruccion.executeQuery();
+
+            return resultado.next();
+        } catch (SQLException e) {
+            System.out.println("El error es: " + e);
+            return false;
+        }
+    }
+
     public static void main(String[] args) {
 
-       // Contactos contactos = new Contactos();
-
+        // Contactos contactos = new Contactos();
         //contactos.agregarContactos("46327750","Nicolás","Díaz","nicolasdiazgarrido@gmail.com","Luzuariga 8421","Maipu");
         //contactos.consultarContacto("46327750","Nicolás");
         //contactos.modificarContacto("46327750", "Emilio", "Díaz", "nicolaszgarrido649@gmail.com", "Luzuariga 3319 23", "Acongua 111");
         //contactos.eliminarContacto("46327750", "Emilio");
-        
     }
 
 }

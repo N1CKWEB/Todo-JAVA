@@ -170,7 +170,7 @@ public class Usuarios {
             }
 
             // Si no se encontró un usuario existente, se procede a registrarlo
-            try (PreparedStatement insertInstruccion = sl.prepareStatement("INSERT INTO usuarios (correo, nombredeusuario, contraseña) VALUES (?, ?, ?)")) {
+            try (PreparedStatement insertInstruccion = sl.prepareStatement("INSERT INTO usuarios (correo, nombredeusuario, contraseña) VALUES (?, ?, ?) ")) {
 
                 insertInstruccion.setString(1, correo);
                 insertInstruccion.setString(2, nombredeusuario);
@@ -336,7 +336,5 @@ public class Usuarios {
         }
        
 
-    }
-
-   
+    }   
 }
