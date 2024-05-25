@@ -61,6 +61,8 @@
                               <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="txtEnvioDeUsuario" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="141" max="-2" attributes="0"/>
+                              <Component id="jLabel1" min="-2" pref="26" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="1" attributes="0">
@@ -88,7 +90,10 @@
                                               <Component id="jLabel25" alignment="0" min="-2" max="-2" attributes="0"/>
                                               <Component id="jLabel27" alignment="1" min="-2" max="-2" attributes="0"/>
                                           </Group>
-                                          <Component id="jLabel26" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                              <Component id="loginBtn8" min="-2" pref="60" max="-2" attributes="0"/>
+                                              <Component id="jLabel26" min="-2" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
                                   </Group>
                               </Group>
@@ -107,12 +112,14 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel9" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
                           <Component id="txtEnvioDeUsuario" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
+                          <Component id="jLabel1" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
+                          <Component id="loginBtn8" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel29" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtAgregarDni" alignment="3" min="-2" pref="47" max="-2" attributes="0"/>
@@ -137,7 +144,7 @@
                       </Group>
                       <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                       <Component id="btnAgregarContacto" min="-2" pref="93" max="-2" attributes="0"/>
-                      <EmptySpace pref="42" max="32767" attributes="0"/>
+                      <EmptySpace pref="36" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -151,7 +158,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="cc" green="cc" red="0" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="........................................"/>
+                <Property name="text" type="java.lang.String" value="..........................................."/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel9">
@@ -264,6 +271,39 @@
             <Component class="javax.swing.JPasswordField" name="txtAgregarApellido">
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtAgregarApellidoActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel1">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="sansserif" size="12" style="2"/>
+                </Property>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="loginBtn8">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="cc" green="66" red="ff" type="rgb"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="sansserif" size="36" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="0"/>
+                <Property name="text" type="java.lang.String" value="&#x2615;"/>
+                <Property name="toolTipText" type="java.lang.String" value=""/>
+                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[50, 50]"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="loginBtn8FocusGained"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="loginBtn8MouseClicked"/>
+                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="loginBtn8MouseExited"/>
+                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="loginBtn8MousePressed"/>
+                <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="loginBtn8MouseReleased"/>
               </Events>
             </Component>
           </SubComponents>

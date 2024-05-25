@@ -53,6 +53,8 @@ public class Ventana2 extends javax.swing.JFrame {
         txtAgregarDni = new javax.swing.JTextField();
         jLabel30 = new javax.swing.JLabel();
         txtAgregarApellido = new javax.swing.JPasswordField();
+        jLabel1 = new javax.swing.JLabel();
+        loginBtn8 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         btnConsultarContacto = new javax.swing.JButton();
@@ -90,7 +92,7 @@ public class Ventana2 extends javax.swing.JFrame {
 
         txtEnvioDeUsuario.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         txtEnvioDeUsuario.setForeground(new java.awt.Color(0, 204, 204));
-        txtEnvioDeUsuario.setText("........................................");
+        txtEnvioDeUsuario.setText("...........................................");
 
         jLabel9.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 204, 204));
@@ -147,6 +149,35 @@ public class Ventana2 extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("sansserif", 2, 12)); // NOI18N
+
+        loginBtn8.setBackground(new java.awt.Color(255, 102, 204));
+        loginBtn8.setFont(new java.awt.Font("sansserif", 1, 36)); // NOI18N
+        loginBtn8.setForeground(new java.awt.Color(255, 255, 255));
+        loginBtn8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        loginBtn8.setText("☕");
+        loginBtn8.setToolTipText("");
+        loginBtn8.setPreferredSize(new java.awt.Dimension(50, 50));
+        loginBtn8.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                loginBtn8FocusGained(evt);
+            }
+        });
+        loginBtn8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                loginBtn8MouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                loginBtn8MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                loginBtn8MousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                loginBtn8MouseReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -157,7 +188,9 @@ public class Ventana2 extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtEnvioDeUsuario))
+                        .addComponent(txtEnvioDeUsuario)
+                        .addGap(141, 141, 141)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnAgregarContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -179,7 +212,9 @@ public class Ventana2 extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel25)
                                         .addComponent(jLabel27, javax.swing.GroupLayout.Alignment.TRAILING))
-                                    .addComponent(jLabel26))))
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(loginBtn8, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel26)))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtAgregarDireccion)
@@ -190,11 +225,13 @@ public class Ventana2 extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
+                .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtEnvioDeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(22, 22, 22)
+                    .addComponent(txtEnvioDeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(loginBtn8, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel29)
                     .addComponent(txtAgregarDni, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -215,7 +252,7 @@ public class Ventana2 extends javax.swing.JFrame {
                     .addComponent(txtAgregarLocalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34)
                 .addComponent(btnAgregarContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("AGREGAR", jPanel1);
@@ -616,6 +653,26 @@ public class Ventana2 extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnAgregarContactoActionPerformed
 
+    private void loginBtn8FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_loginBtn8FocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loginBtn8FocusGained
+
+    private void loginBtn8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginBtn8MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loginBtn8MouseClicked
+
+    private void loginBtn8MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginBtn8MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loginBtn8MouseExited
+
+    private void loginBtn8MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginBtn8MousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loginBtn8MousePressed
+
+    private void loginBtn8MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginBtn8MouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loginBtn8MouseReleased
+
     /**
      * @param args the command line arguments
      */
@@ -657,6 +714,7 @@ public class Ventana2 extends javax.swing.JFrame {
     private javax.swing.JButton btnConsultarContacto;
     private javax.swing.JButton btnEliminarContacto2;
     private javax.swing.JButton btnModificarContacto1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
@@ -680,6 +738,7 @@ public class Ventana2 extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JLabel loginBtn8;
     private javax.swing.JPasswordField txtAgregarApellido;
     private javax.swing.JTextField txtAgregarCorreo;
     private javax.swing.JTextField txtAgregarDireccion;
