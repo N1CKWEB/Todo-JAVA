@@ -115,9 +115,9 @@ public class Contactos {
         }
     }
 
-public boolean modificarContacto(String dni, String nombre, String apellido, String correo, String direccion, String localidad) {
+public boolean modificarContacto(String dni, String nombre, String apellido, String correo, String direccion, String localidad, String dniUsuario) {
 
-    String consulta = "UPDATE contactosdeusuarios SET nombre = ?, apellido = ?, correo = ?, direccion = ?, localidad = ? WHERE dni = ?";
+    String consulta = "UPDATE contactosdeusuarios SET nombre = ?, apellido = ?, correo = ?, direccion = ?, localidad = ?, dni= ? WHERE dni = ?";
   
     PreparedStatement instruccion = null;
     boolean actualizado = false;
@@ -130,6 +130,7 @@ public boolean modificarContacto(String dni, String nombre, String apellido, Str
         instruccion.setString(4, direccion);
         instruccion.setString(5, localidad);
         instruccion.setString(6, dni);
+        instruccion.setString(7, dniUsuario);
 
         int filasAfectadas = instruccion.executeUpdate();
         if (filasAfectadas > 0) {
