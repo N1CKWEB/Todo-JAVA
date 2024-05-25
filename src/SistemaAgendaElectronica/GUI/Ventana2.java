@@ -660,14 +660,14 @@ public class Ventana2 extends javax.swing.JFrame {
         contactos.elCorreoExisteParaContacto(correo);
         contactos.elDniExisteParaContacto(dni);
 
-        if (contactos.verificacionDeContacto(dni, correo)) {
+       // if (contactos.verificacionDeContacto(dni, correo)) {
         contactos.agregarContactos(dni, nombre, apellido, correo, direccion, localidad);
         JOptionPane.showMessageDialog(null, "¡Contacto registrado exitosamente!");
        
-       } else {
+      // } else {
         JOptionPane.showMessageDialog(null, "Contacto no registrado");
-       btnAgregarContacto.setEnabled(false);
-       }
+       //btnAgregarContacto.setEnabled(false);
+       //}
 
 
     }//GEN-LAST:event_btnAgregarContactoActionPerformed

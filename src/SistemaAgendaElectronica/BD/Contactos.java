@@ -175,7 +175,7 @@ public class Contactos {
         return eliminado;
     }
 
-    public boolean verificacionDeContacto(String dni, String correo) {
+    public boolean verificacionDeContacto(String dni, String correo,String nombre,String apellido,String direccion) {
 
         if (!elDniEsValidoParaContacto(dni)) {
             JOptionPane.showMessageDialog(null, "El dni no es valido, no contiene entre 8 y 9 dígitos");
@@ -186,6 +186,17 @@ public class Contactos {
             JOptionPane.showMessageDialog(null, "El correo no es valido, no contiene '@' y el 'gmail.com' ");
             return false;
         }
+//        if (!elNombreEsValidoParaContacto(String nombre)) {
+//            return false;           
+//        }
+//        if (!elApellidoEsValidoParaContacto(String nombre)) {
+//            
+//             return false;
+//        }
+//        if (!laDireccionEsValidoParaContacto) {
+//            return false;
+//        }
+        
         if (elCorreoExisteParaContacto(correo)) {
             JOptionPane.showMessageDialog(null, "El correo ya existe en contactos");
             return false;
@@ -195,6 +206,8 @@ public class Contactos {
             JOptionPane.showMessageDialog(null, "El dni ya existe en contacto");
             return false;
         }
+        
+        
 
         try {
             String consulta = "SELECT 1 FROM contactosdeusuarios WHERE dni = ? AND correo = ?";
@@ -241,6 +254,18 @@ public class Contactos {
 
         return matcher.matches();
     }
+    
+//   public boolean elNombreEsValidoParaContacto(String nombre){
+//       
+//       
+//   }
+//   public boolean elApellidoEsValidoParaContacto(String apellido){
+//       
+//   }
+//   public boolean laDireccionEsValidoParaContacto(String direccion){
+//       
+//   }
+   
 
     public boolean elCorreoExisteParaContacto(String correo) {
 
