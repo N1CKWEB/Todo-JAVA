@@ -23,10 +23,8 @@ public class Ventana1 extends javax.swing.JFrame {
      */
     public Ventana1() {
         initComponents();
-        btnEncriptar.setEnabled(false);
         this.setLocationRelativeTo(null);
         btnRegistrarte.setEnabled(false);
-        btnAgendaSesion.setEnabled(false);
         btnIniciarSesion.setEnabled(false);
     }
 
@@ -45,12 +43,10 @@ public class Ventana1 extends javax.swing.JFrame {
         lbUsuarioSesion = new javax.swing.JLabel();
         txtUSuarioSesion = new javax.swing.JTextField();
         txtContraseñaSesion = new javax.swing.JTextField();
-        btnAgendaSesion = new javax.swing.JButton();
         btnRecuperarContraseñaSesion = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btnIniciarSesion = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        btnEncriptar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         lbUsuarioSesion2 = new javax.swing.JLabel();
         txtCorreoRegistrarse = new javax.swing.JTextField();
@@ -96,15 +92,6 @@ public class Ventana1 extends javax.swing.JFrame {
             }
         });
 
-        btnAgendaSesion.setBackground(new java.awt.Color(102, 102, 255));
-        btnAgendaSesion.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
-        btnAgendaSesion.setText("AGENDA");
-        btnAgendaSesion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgendaSesionActionPerformed(evt);
-            }
-        });
-
         btnRecuperarContraseñaSesion.setBackground(new java.awt.Color(102, 102, 255));
         btnRecuperarContraseñaSesion.setFont(new java.awt.Font("Arial Black", 0, 10)); // NOI18N
         btnRecuperarContraseñaSesion.setText("RECUPERAR CONTRASEÑA");
@@ -133,27 +120,24 @@ public class Ventana1 extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 79, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(lbUsuarioSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtContraseñaSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtUSuarioSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(54, 54, 54))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35)
-                        .addComponent(btnAgendaSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(lbUsuarioSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtContraseñaSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtUSuarioSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(54, 54, 54))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnRecuperarContraseñaSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))))
-                .addGap(37, 37, 37))
+                            .addComponent(jLabel1))
+                        .addGap(37, 37, 37))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(150, 150, 150)
+                .addComponent(btnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -167,9 +151,7 @@ public class Ventana1 extends javax.swing.JFrame {
                     .addComponent(txtContraseñaSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAgendaSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -180,15 +162,6 @@ public class Ventana1 extends javax.swing.JFrame {
         jTabbedPane4.addTab("INICIAR SESIÓN", jPanel1);
 
         jPanel2.setBackground(new java.awt.Color(51, 0, 255));
-
-        btnEncriptar.setBackground(new java.awt.Color(102, 102, 255));
-        btnEncriptar.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
-        btnEncriptar.setText("ENCRIPTAR");
-        btnEncriptar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEncriptarActionPerformed(evt);
-            }
-        });
 
         jLabel4.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 204, 204));
@@ -250,23 +223,20 @@ public class Ventana1 extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap(92, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(lbUsuarioSesion2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addGap(32, 32, 32)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(lbUsuarioSesion2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
-                        .addGap(32, 32, 32)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtUSuarioRegistrarse, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
-                            .addComponent(txtCorreoRegistrarse, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
-                            .addComponent(txtContraseñaRegistrarse))
-                        .addGap(96, 96, 96))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(btnEncriptar, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                        .addComponent(btnRegistrarte, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(146, 146, 146))))
+                    .addComponent(txtUSuarioRegistrarse, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
+                    .addComponent(txtCorreoRegistrarse, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
+                    .addComponent(txtContraseñaRegistrarse))
+                .addGap(96, 96, 96))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(171, 171, 171)
+                .addComponent(btnRegistrarte, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -285,11 +255,9 @@ public class Ventana1 extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtContraseñaRegistrarse, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnRegistrarte, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEncriptar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addComponent(btnRegistrarte, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41))
         );
 
         jTabbedPane4.addTab("REGISTRARSE", jPanel2);
@@ -308,16 +276,6 @@ public class Ventana1 extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAgendaSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgendaSesionActionPerformed
-
-        Ventana2 v2 = new Ventana2();
-        v2.setVisible(true);
-        this.setVisible(false);
-        v2.setLocationRelativeTo(null);
-
-
-    }//GEN-LAST:event_btnAgendaSesionActionPerformed
-
     private void btnRecuperarContraseñaSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecuperarContraseñaSesionActionPerformed
 
         String remitente = "nicolasdiazgarrido649@gmail.com";
@@ -334,6 +292,7 @@ public class Ventana1 extends javax.swing.JFrame {
             correo.enviarGmail("Recuperación de contraseña: ", nuevaContraseña, destinatario);
             JOptionPane.showMessageDialog(null, " ☑ ️!Se envió con éxito el correo electrónico. ☑ ");
             JOptionPane.showMessageDialog(null, "☑  !Contraseña recuperada exitosamente! ☑ ");
+            System.out.println("Contraseña nueva: "+nuevaContraseña);
 
         } catch (MessagingException ex) {
             Logger.getLogger(Ventana1.class.getName()).log(Level.SEVERE, null, ex);
@@ -342,21 +301,6 @@ public class Ventana1 extends javax.swing.JFrame {
         txtUSuarioSesion.setText(null);
         txtContraseñaSesion.setText(null);
     }//GEN-LAST:event_btnRecuperarContraseñaSesionActionPerformed
-
-    private void btnEncriptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncriptarActionPerformed
-        Encriptado encriptar = new Encriptado();
-
-        String usuario = txtUSuarioRegistrarse.getText();
-        String contraseña = txtContraseñaRegistrarse.getText();
-
-        encriptar.encriptarContraseña(contraseña);
-
-        txtUSuarioRegistrarse.setText(null);
-        txtContraseñaRegistrarse.setText(null);
-        txtCorreoRegistrarse.setText(null);
-
-
-    }//GEN-LAST:event_btnEncriptarActionPerformed
 
     private void txtCorreoRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCorreoRegistrarseActionPerformed
         // TODO add your handling code here:
@@ -369,38 +313,42 @@ public class Ventana1 extends javax.swing.JFrame {
     }//GEN-LAST:event_txtContraseñaRegistrarseActionPerformed
 
     private void btnRegistrarteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarteActionPerformed
+Ventana2 v2 = new Ventana2();
+Usuarios user = new Usuarios();
+Encriptado encriptar = new Encriptado();
 
-        Ventana2 v2 = new Ventana2();
-        Usuarios user = new Usuarios();
-        Encriptado encriptar = new Encriptado();
-        
-        String usuario = txtUSuarioRegistrarse.getText().trim();
-        String correo = txtCorreoRegistrarse.getText();
-        String contraseña = txtContraseñaRegistrarse.getText();
+String usuario = txtUSuarioRegistrarse.getText().trim();
+String correo = txtCorreoRegistrarse.getText();
+String contraseña = txtContraseñaRegistrarse.getText();
 
-        
-        
-        encriptar.validarContraseña(contraseña);
-        user.elCorreEsValidoParaRegistrarse(correo);
-        user.correoExisteDeRegistrarse(correo);
-        user.nombreDeUSuarioExisteDeRegistrarse(usuario);
-        user.contraseñaExisteDeRegistrarse(contraseña);
-                 
-        if (user.verificacionDeRegistrarse(correo, usuario, contraseña)) {
-            user.agregarRegistrarse(usuario, correo, contraseña);
-            JOptionPane.showMessageDialog(null, "¡Usuario registrado exitosamente!");
-            btnEncriptar.setEnabled(true);
-            v2.setDato(txtUSuarioRegistrarse.getText());
-            v2.setVisible(true);
-            this.setVisible(false);
-        } else {
-            JOptionPane.showMessageDialog(null, "Usuario no registrado");
-            btnEncriptar.setEnabled(false);
-            txtUSuarioRegistrarse.setText(usuario); 
-            txtCorreoRegistrarse.setText(usuario);
-            txtContraseñaRegistrarse.setText(contraseña);
-        }
-     
+
+
+
+// Validaciones previas
+if (user.verificacionDeRegistrarse(correo, usuario, contraseña)) {
+    if (user.agregarRegistrarse(usuario, correo, contraseña)) {
+    
+        // Encriptar la contraseña
+          encriptar.encriptarContraseña(contraseña); // Aquí se encripta la contraseña
+          user.elNombreDeUSuarioEsValidoParaRegistrarse(usuario);
+          user.laContraseñaEsValidoParaRegistrarse(contraseña);
+          JOptionPane.showMessageDialog(null, "¡Usuario registrado exitosamente!");
+         v2.setDato(txtUSuarioRegistrarse.getText());
+         v2.setVisible(true);
+         this.setVisible(false);
+    
+    } else {
+        JOptionPane.showMessageDialog(null, "Error al registrar el usuario");
+    }
+} else {
+    
+    user.elNombreDeUSuarioEsValidoParaRegistrarse(usuario);
+    user.laContraseñaEsValidoParaRegistrarse(contraseña);
+    JOptionPane.showMessageDialog(null, "Usuario no registrado");
+    txtUSuarioRegistrarse.setText(usuario);
+    txtCorreoRegistrarse.setText(correo);
+    txtContraseñaRegistrarse.setText(contraseña);
+}
 
     }//GEN-LAST:event_btnRegistrarteActionPerformed
 
@@ -458,13 +406,21 @@ public class Ventana1 extends javax.swing.JFrame {
     }//GEN-LAST:event_txtContraseñaSesionActionPerformed
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
+
+        Ventana2 v2 = new Ventana2();
         Usuarios user = new Usuarios();
         String correo = txtUSuarioSesion.getText();
         String contraseña = txtContraseñaSesion.getText();
 
+        v2.setVisible(true);
+        this.setVisible(false);
+        v2.setLocationRelativeTo(null);
+                 
+        
         user.elCorreoEsValidoParaIniciarSesion(correo);
-
-        btnAgendaSesion.setEnabled(true);
+        user.verificacionInicioDeSesion(correo, contraseña);
+        v2.setDato(txtUSuarioSesion.getText());
+        
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
     /**
@@ -503,8 +459,6 @@ public class Ventana1 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAgendaSesion;
-    private javax.swing.JButton btnEncriptar;
     private javax.swing.JButton btnIniciarSesion;
     private javax.swing.JButton btnRecuperarContraseñaSesion;
     private javax.swing.JButton btnRegistrarte;

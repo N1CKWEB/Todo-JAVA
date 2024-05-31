@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 
 public class Conexion {
 
-    String url = "jdbc:mysql://localhost:3306/sistema_agenda_electronica";
+    String url = "jdbc:mysql://localhost:3306/app_sistema_agenda_electronica";
     String user = "root";
     String password = "";
     String driver = "com.mysql.cj.jdbc.Driver";

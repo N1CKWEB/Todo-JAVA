@@ -41,18 +41,18 @@ public class Encriptado {
         System.out.println("La contraseña encriptada es:" + contraseña);
     }
 
-    
-    public void validarContraseña(String contraseña) {
 
-        if (contraseñaValida(contraseña)) {
-            JOptionPane.showMessageDialog(null, "Sí es valida la contraseña!");
+    public static void validarContraseña(String contraseña) {
+        if (isValidPassword(contraseña)) {
+            JOptionPane.showMessageDialog(null, "¡Contraseña válida!");
         } else {
-            JOptionPane.showMessageDialog(null, "!Error!");
-
+            JOptionPane.showMessageDialog(null, "¡Contraseña no válida! Debe cumplir con los criterios.");
         }
     }
+  
 
-    public static boolean contraseñaValida(String contraseña) {
+    // Método para validar la contraseña
+    public static boolean isValidPassword(String password) {
         // Expresión regular para verificar la contraseña
         String regex = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+=]).{12,}$";
 
@@ -60,11 +60,11 @@ public class Encriptado {
         Pattern pattern = Pattern.compile(regex);
 
         // Crea un matcher para la contraseña dada
-        Matcher matcher = pattern.matcher(contraseña);
-        // Devuelve verdadero si la contraseña cumple con la expresión regular
+        Matcher matcher = pattern.matcher(password);
+       // Devuelve verdadero si la contraseña cumple con la expresión regular
         return matcher.matches();
-
     }
+    
 
     public static String bytesToHex(byte[] hash) {
         StringBuilder hexString = new StringBuilder(2 * hash.length);

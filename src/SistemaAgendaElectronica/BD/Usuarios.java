@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package SistemaAgendaElectronica.BD;
 
 import SistemaAgendaElectronica.Servicios.EnviarCorreoElectronico;
@@ -34,7 +30,7 @@ public class Usuarios {
 
     public Usuarios() {
         try {
-            String url = "jdbc:mysql://localhost:3306/sistema_agenda_electronica";
+            String url = "jdbc:mysql://localhost:3306/app_sistema_agenda_electronica";
             String usuario = "root";
             String contraseña = "";
             sl = DriverManager.getConnection(url, usuario, contraseña);
@@ -45,78 +41,59 @@ public class Usuarios {
         }
     }
 
-    //METODOS DE USUARIO PARA INICIAR SESION Y REGISTRARSE
-    public Boolean agregarRegistrarse(String nombredeusuario, String correo, String contraseña) {
+    // METODOS DE USUARIO PARA REGISTRARSE
+    public Boolean agregarRegistrarse(String nombredeusuarios, String correo, String contraseña) {
+        if (verificacionDeRegistrarse(correo, nombredeusuarios, contraseña)) {
+            try {
+                String consulta = "INSERT INTO usuarios (nombredeusuarios, correo, contraseña) VALUES (? , ? , ?)";
+                instruccion = sl.prepareStatement(consulta);
 
-//    // Comprobar si el nombre de usuario ya existe
-//    if (existeNombreUsuario(nombredeusuario)) {
-//        JOptionPane.showMessageDialog(null, "El nombre de usuario ya está en uso. Por favor, elige otro nombre.");
-//        return false;
-//    }
-//
-//    // Comprobar si el correo ya existe
-//    if (existeCorreo(correo)) {
-//        JOptionPane.showMessageDialog(null, "El correo electrónico ya está en uso. Por favor, utiliza otro correo.");
-//        return false;
-//    }
-        try {
+                instruccion.setString(1, nombredeusuarios);
+                instruccion.setString(2, correo);
+                instruccion.setString(3, contraseña);
 
-            String consulta = "INSERT INTO usuarios (nombredeusuario,correo,contraseña) VALUES (? , ? , ?)";
-            instruccion = sl.prepareStatement(consulta);
+                instruccion.executeUpdate();
 
-            instruccion.setString(1, nombredeusuario);
-            instruccion.setString(2, correo);
-            instruccion.setString(3, contraseña);
+                registrado = true;
+                return registrado;
 
-            instruccion.executeUpdate();
-
-            System.out.println("Se creo correctamente");
-
-            registrado = true;
-            return registrado;
-
-        } catch (SQLException e) {
-
-            registrado = false;
-            return registrado;
+            } catch (SQLException e) {
+                registrado = false;
+                return registrado;
+            }
+        } else {
+            return false;
         }
     }
 
+    // METODOS DE USUARIO PARA VERIFICAR INICIO DE SESION
     public Boolean verificacionInicioDeSesion(String correo, String contraseña) {
-
         if (!elCorreoEsValidoParaIniciarSesion(correo)) {
-            JOptionPane.showMessageDialog(null, "El correo no es valido. Debe contener '@' y terminar 'gmail.com'");
+            JOptionPane.showMessageDialog(null, "El correo no es valido. Debe contener '@' y terminar 'gmail.com' ❌");
             return false;
         }
 
         try {
-
             String query = "SELECT * FROM usuarios WHERE correo = ? AND contraseña = ?";
-
             instruccion = sl.prepareStatement(query);
 
             instruccion.setString(1, correo);
             instruccion.setString(2, contraseña);
 
-            //guardamos el resultado de la busqueda
+            // guardamos el resultado de la busqueda
             resultado = instruccion.executeQuery();
 
             if (resultado.next()) {
-
-                JOptionPane.showMessageDialog(null, "!Se Inicio de Sesion Correctamente!");
+                JOptionPane.showMessageDialog(null, "!Inicio de Sesion Correctamente!");
                 this.logueado = true;
                 return logueado;
-
             } else {
-
-                JOptionPane.showMessageDialog(null, "!Error de Inicio de Sesion!");
+                JOptionPane.showMessageDialog(null, "!Error de Inicio de Sesion! ❌");
                 this.logueado = false;
                 return logueado;
-
             }
 
         } catch (SQLException e) {
-
             System.out.println("  !ERROR!  " + e);
             return false;
         }
@@ -130,65 +107,66 @@ public class Usuarios {
         return matcher.matches();
     }
 
-    public boolean verificacionDeRegistrarse(String correo, String nombredeusuario, String contraseña) {
-
+    // METODOS DE USUARIO PARA VERIFICAR EL REGISTRARSE
+    public boolean verificacionDeRegistrarse(String correo, String nombredeusuarios, String contraseña) {
         // Verificar si el correo es válido
-        if (!elCorreEsValidoParaRegistrarse(correo)) {
-            JOptionPane.showMessageDialog(null, "El correo no es válido. Debe contener '@' y terminar en 'gmail.com'");
-            return false;
+        if (elCorreEsValidoParaRegistrarse(correo)) {
+         JOptionPane.showMessageDialog(null,"El correo es valido ☑️");
+        } else{
+          JOptionPane.showMessageDialog(null, "El correo no es válido. Debe contener '@' y terminar en 'gmail.com' ❌");
+           
         }
-
+        
+        
+        // Verificar si el nombre de usuario ya existe
+        if (nombreDeUSuarioExisteDeRegistrarse(nombredeusuarios)) {
+            JOptionPane.showMessageDialog(null, "El nombre de usuario ya está registrado");
+            return false;
+        }       
+ 
         // Verificar si el correo ya existe
         if (correoExisteDeRegistrarse(correo)) {
             JOptionPane.showMessageDialog(null, "El correo ya está registrado");
             return false;
         }
-
-        // Verificar si el nombre de usuario ya existe
-        if (nombreDeUSuarioExisteDeRegistrarse(nombredeusuario)) {
-            JOptionPane.showMessageDialog(null, "El nombre de usuario ya está registrado");
-            return false;
-        }
-
-        // Verificar si el nombre de usuario ya existe
-        if (contraseñaExisteDeRegistrarse(contraseña)) {
-            JOptionPane.showMessageDialog(null, "El nombre de usuario ya está registrado");
-            return false;
-        }
-
-        try (PreparedStatement instruccion = sl.prepareStatement("SELECT 1 FROM usuarios WHERE correo = ? AND nombredeusuario = ? AND contraseña = ?")) {
-
-            instruccion.setString(1, correo);
-            instruccion.setString(2, nombredeusuario);
-            instruccion.setString(3, contraseña);
-
-            try (ResultSet resultado = instruccion.executeQuery()) {
-                if (resultado.next()) {
-                    JOptionPane.showMessageDialog(null, "El usuario con este correo, nombre de usuario y contraseña ya está registrado.");
-                    return false;
-                }
-            }
-
-            // Si no se encontró un usuario existente, se procede a registrarlo
-            try (PreparedStatement insertInstruccion = sl.prepareStatement("INSERT INTO usuarios (correo, nombredeusuario, contraseña) VALUES (?, ?, ?) ")) {
-
-                insertInstruccion.setString(1, correo);
-                insertInstruccion.setString(2, nombredeusuario);
-                insertInstruccion.setString(3, contraseña);
-                insertInstruccion.executeUpdate();
-            }
-            return true;
-
-        } catch (SQLException e) {
-            System.out.println("El error es: " + e);
-            return false;
-        }
+        
+        return true;
     }
 
     public boolean elCorreEsValidoParaRegistrarse(String correo) {
         String regex = "^[\\w-\\.]+@((gmail\\.com))$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(correo);
+        return matcher.matches();
+    }
+
+    public boolean elNombreDeUSuarioEsValidoParaRegistrarse(String nombredeusuarios) {
+    String regex = "^[a-zA-Z0-9]+$"; // Cambiado de zA-Z a a-zA-Z para incluir minúsculas
+    Pattern pattern = Pattern.compile(regex);
+    Matcher matcher = pattern.matcher(nombredeusuarios);
+
+    if (matcher.matches()) { // Corrección aquí
+        JOptionPane.showMessageDialog(null, "El nombre de usuario es valido ☑️");
+    } else {
+        JOptionPane.showMessageDialog(null, "El nombre de usuario no es valido. Debe contener 'letras' y 'números' ❌");
+    }
+    return matcher.matches();
+}
+
+
+    public boolean laContraseñaEsValidoParaRegistrarse(String contraseña) {
+        // Expresión regular para verificar la contraseña
+        String regex = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+=]).{12,}$";
+
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(contraseña);
+
+        if (contraseña.matches(regex)) {
+            JOptionPane.showMessageDialog(null, "La contraseña es valida ☑");
+        } else {
+            JOptionPane.showMessageDialog(null, "La contraseña no es valida, no contiene lo pedido ❌");
+        }
+
         return matcher.matches();
     }
 
@@ -206,15 +184,14 @@ public class Usuarios {
             System.out.println("EL error es: " + e);
             return false;
         }
-
     }
 
-    public boolean nombreDeUSuarioExisteDeRegistrarse(String nombredeusuario) {
+    public boolean nombreDeUSuarioExisteDeRegistrarse(String nombredeusuarios) {
         try {
-            String consulta = "SELECT 1 FROM usuarios WHERE nombredeusuario = ?";
+            String consulta = "SELECT 1 FROM usuarios WHERE nombredeusuarios = ?";
             instruccion = sl.prepareStatement(consulta);
 
-            instruccion.setString(1, nombredeusuario);
+            instruccion.setString(1, nombredeusuarios);
             resultado = instruccion.executeQuery();
 
             return resultado.next();
@@ -225,7 +202,6 @@ public class Usuarios {
     }
 
     public boolean contraseñaExisteDeRegistrarse(String contraseña) {
-
         try {
             String consulta = "SELECT 1 FROM usuarios WHERE contraseña = ?";
             instruccion = sl.prepareStatement(consulta);
@@ -241,6 +217,7 @@ public class Usuarios {
         }
     }
 
+    // MÉTODO PARA RECUPERAR CONTRASEÑA
     public boolean recuperarContraseña(String correoDelDestinatario) {
         if (sl == null) {
             JOptionPane.showMessageDialog(null, "No hay conexión a la base de datos.");
@@ -262,8 +239,6 @@ public class Usuarios {
             EnviarCorreoElectronico correo = new EnviarCorreoElectronico(remitente, password);
             correo.enviarGmail("Recuperación de contraseña:", nuevaContraseña, correoDelDestinatario);
 
-            JOptionPane.showMessageDialog(null, "Se envió con éxito el correo electrónico.");
-            JOptionPane.showMessageDialog(null, "Contraseña recuperada exitosamente!");
         } catch (InvalidParameterException | SQLException | MessagingException ex) {
             System.out.println("No se pudo enviar el correo electrónico.");
             System.out.println("El error es: " + ex);
@@ -272,6 +247,7 @@ public class Usuarios {
         return true;
     }
 
+    // MÉTODO PARA GENERAR CONTRASEÑA ALEATORIA NUEVA
     public String generarContraseñaAleatoria(int longitud) {
         Random random = new Random();
         StringBuilder contraseña = new StringBuilder();
@@ -302,6 +278,7 @@ public class Usuarios {
         return contraseña.toString();
     }
 
+    // MÉTODO PARA ACTUALIZAR CONTRASEÑA
     public boolean actualizarContraseña(String correoDelDestinatario, String nuevaContraseña) {
         try {
             String consulta = "UPDATE usuarios SET contraseña = ? WHERE correo = ?";
@@ -317,24 +294,6 @@ public class Usuarios {
     }
 
     public static void main(String[] args) {
-        Usuarios user = new Usuarios();
-        String nuevaContraseña = user.generarContraseñaAleatoria(10);
-        user.recuperarContraseña("Mario");
-        user.actualizarContraseña("Mario", nuevaContraseña);
-
-        user.cerrarConexion();
+        // Método main vacío
     }
-
-    public void cerrarConexion() {
-        try {
-            if (sl != null && !sl.isClosed()) {
-                sl.close();
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
-
-        }
-       
-
-    }   
 }
