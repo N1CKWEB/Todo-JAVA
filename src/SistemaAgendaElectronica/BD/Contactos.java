@@ -82,36 +82,91 @@ public class Contactos {
         
     }
     
-    //MÉTODO PARA MODIFICAR CONTACTOS
-    public boolean modificarContacto(String dni, String nombre, String apellido,String direccion, String localidad, String dniUsuario) {
+    //MÉTODO PARA MODIFICAR CONTACTO
+    public boolean modificarContacto(String dni, String nombre, String apellido, String direccion, String localidad, String dniUsuario) {
+    StringBuilder consulta = new StringBuilder("UPDATE contactosdeusuarios SET ");
+    boolean primero = true;
 
-        String consulta = "UPDATE contactosdeusuarios SET nombre = ?, apellido = ?, direccion = ?, localidad = ?, dni= ? WHERE dni = ?";
+    if (nombre != null && !nombre.isEmpty()) {
+        consulta.append("nombre = ?");
+        primero = false;
+    }
+    if (apellido != null && !apellido.isEmpty()) {
+        if (!primero) {
+            consulta.append(", ");
+        }
+        consulta.append("apellido = ?");
+        primero = false;
+    }
+    if (direccion != null && !direccion.isEmpty()) {
+        if (!primero) {
+            consulta.append(", ");
+        }
+        consulta.append("direccion = ?");
+        primero = false;
+    }
+    if (localidad != null && !localidad.isEmpty()) {
+        if (!primero) {
+            consulta.append(", ");
+        }
+        consulta.append("localidad = ?");
+        primero = false;
+    }
+    if (dni != null && !dni.isEmpty()) {
+        if (!primero) {
+            consulta.append(", ");
+        }
+        consulta.append("dni = ?");
+    }
 
-        PreparedStatement instruccion = null;
-        boolean actualizado = false;
+    consulta.append(" WHERE dni = ?");
 
-        try {
-            instruccion = sl.prepareStatement(consulta);
-            instruccion.setString(1, nombre);
-            instruccion.setString(2, apellido);
-            instruccion.setString(3, direccion);
-            instruccion.setString(4, localidad);
-            instruccion.setString(5, dni);
-            instruccion.setString(6, dniUsuario);
+    PreparedStatement instruccion = null;
+    boolean actualizado = false;
 
-            int filasAfectadas = instruccion.executeUpdate();
-            if (filasAfectadas > 0) {
-                JOptionPane.showMessageDialog(null, "Contacto modificado correctamente.");
-                actualizado = true;
-            } else {
-                JOptionPane.showMessageDialog(null, "No se encontró un contacto con el DNI especificado.");
-            }
-        } catch (SQLException e) {
-            System.out.println("Error al modificar el contacto: " + e.getMessage());
+    try {
+        instruccion = sl.prepareStatement(consulta.toString());
+        int index = 1;
+
+        if (nombre != null && !nombre.isEmpty()) {
+            instruccion.setString(index++, nombre);
+        }
+        if (apellido != null && !apellido.isEmpty()) {
+            instruccion.setString(index++, apellido);
+        }
+        if (direccion != null && !direccion.isEmpty()) {
+            instruccion.setString(index++, direccion);
+        }
+        if (localidad != null && !localidad.isEmpty()) {
+            instruccion.setString(index++, localidad);
+        }
+        if (dni != null && !dni.isEmpty()) {
+            instruccion.setString(index++, dni);
         }
 
-        return actualizado;
+        instruccion.setString(index, dniUsuario);
+
+        int filasAfectadas = instruccion.executeUpdate();
+        if (filasAfectadas > 0) {
+            JOptionPane.showMessageDialog(null, "Contacto modificado correctamente.");
+            actualizado = true;
+        } else {
+            JOptionPane.showMessageDialog(null, "No se encontró un contacto con el DNI especificado.");
+        }
+    } catch (SQLException e) {
+        System.out.println("Error al modificar el contacto: " + e.getMessage());
+    } finally {
+        if (instruccion != null) {
+            try {
+                instruccion.close();
+            } catch (SQLException e) {
+                System.out.println("Error al cerrar el PreparedStatement: " + e.getMessage());
+            }
+        }
     }
+
+    return actualizado;
+}
     
   //MÉTODO PARA ELIMINAR CONTACTOS
     public boolean eliminarContacto(String dni, String nombre) {
