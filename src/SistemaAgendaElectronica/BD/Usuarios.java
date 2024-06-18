@@ -1,6 +1,7 @@
 package SistemaAgendaElectronica.BD;
 
 import SistemaAgendaElectronica.Servicios.EnviarCorreoElectronico;
+import java.awt.Image;
 import java.sql.ResultSet;
 import java.security.InvalidParameterException;
 import java.sql.PreparedStatement;
@@ -13,6 +14,11 @@ import java.util.logging.Logger;
 import java.sql.DriverManager;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import static javax.swing.SpringLayout.HEIGHT;
+import static javax.swing.SpringLayout.WIDTH;
 
 public class Usuarios {
 
@@ -43,26 +49,22 @@ public class Usuarios {
 
     // METODOS DE USUARIO PARA REGISTRARSE
     public Boolean agregarRegistrarse(String nombredeusuarios, String correo, String contraseña) {
-        if (verificacionDeRegistrarse(correo, nombredeusuarios, contraseña)) {
-            try {
-                String consulta = "INSERT INTO usuarios (nombredeusuarios, correo, contraseña) VALUES (? , ? , ?)";
-                instruccion = sl.prepareStatement(consulta);
+        try {
+            String consulta = "INSERT INTO usuarios (nombredeusuarios, correo, contraseña) VALUES (? , ? , ?)";
+            instruccion = sl.prepareStatement(consulta);
 
-                instruccion.setString(1, nombredeusuarios);
-                instruccion.setString(2, correo);
-                instruccion.setString(3, contraseña);
+            instruccion.setString(1, nombredeusuarios);
+            instruccion.setString(2, correo);
+            instruccion.setString(3, contraseña);
 
-                instruccion.executeUpdate();
+            instruccion.executeUpdate();
 
-                registrado = true;
-                return registrado;
+            registrado = true;
+            return registrado;
 
-            } catch (SQLException e) {
-                registrado = false;
-                return registrado;
-            }
-        } else {
-            return false;
+        } catch (SQLException e) {
+            registrado = false;
+            return registrado;
         }
     }
 
@@ -107,52 +109,33 @@ public class Usuarios {
         return matcher.matches();
     }
 
-    // METODOS DE USUARIO PARA VERIFICAR EL REGISTRARSE
-    public boolean verificacionDeRegistrarse(String correo, String nombredeusuarios, String contraseña) {
-        // Verificar si el correo es válido
-        if (elCorreEsValidoParaRegistrarse(correo)) {
-         JOptionPane.showMessageDialog(null,"El correo es valido ☑️");
-        } else{
-          JOptionPane.showMessageDialog(null, "El correo no es válido. Debe contener '@' y terminar en 'gmail.com' ❌");
-           
-        }
-        
-        
-        // Verificar si el nombre de usuario ya existe
-        if (nombreDeUSuarioExisteDeRegistrarse(nombredeusuarios)) {
-            JOptionPane.showMessageDialog(null, "El nombre de usuario ya está registrado");
-            return false;
-        }       
- 
-        // Verificar si el correo ya existe
-        if (correoExisteDeRegistrarse(correo)) {
-            JOptionPane.showMessageDialog(null, "El correo ya está registrado");
-            return false;
-        }
-        
-        return true;
-    }
-
+    // METODOS DE USUARIOS PARA VERIFICAR EL REGISTRARSE
     public boolean elCorreEsValidoParaRegistrarse(String correo) {
         String regex = "^[\\w-\\.]+@((gmail\\.com))$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(correo);
+
+        if (correo.matches(regex)) {
+            JOptionPane.showMessageDialog(null, "El correo es valido ☑");
+        } else {
+            JOptionPane.showMessageDialog(null, "El correo no es valido, no contiene lo pedido ❌");
+        }
         return matcher.matches();
     }
 
     public boolean elNombreDeUSuarioEsValidoParaRegistrarse(String nombredeusuarios) {
-    String regex = "^[a-zA-Z0-9]+$"; // Cambiado de zA-Z a a-zA-Z para incluir minúsculas
-    Pattern pattern = Pattern.compile(regex);
-    Matcher matcher = pattern.matcher(nombredeusuarios);
+        String regex = "^[a-zA-Z0-9]+$"; // Cambiado de zA-Z a a-zA-Z para incluir minúsculas
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(nombredeusuarios);
 
-    if (matcher.matches()) { // Corrección aquí
-        JOptionPane.showMessageDialog(null, "El nombre de usuario es valido ☑️");
-    } else {
-        JOptionPane.showMessageDialog(null, "El nombre de usuario no es valido. Debe contener 'letras' y 'números' ❌");
+        if (nombredeusuarios.matches(regex)) {
+            JOptionPane.showMessageDialog(null, "El usuario es valido ☑");
+        } else {
+            JOptionPane.showMessageDialog(null, "El usuario no es valido, no contiene lo pedido ❌");
+        }
+
+        return matcher.matches();
     }
-    return matcher.matches();
-}
-
 
     public boolean laContraseñaEsValidoParaRegistrarse(String contraseña) {
         // Expresión regular para verificar la contraseña
@@ -178,7 +161,13 @@ public class Usuarios {
             instruccion.setString(1, correo);
             resultado = instruccion.executeQuery();
 
-            return resultado.next();
+       if (resultado.next()) {
+            System.out.println("El correo existe. ❌ ");
+            return false;
+        } else {
+            System.out.println("El correo no existe. ☑");
+            return true;
+        }
 
         } catch (SQLException e) {
             System.out.println("EL error es: " + e);
@@ -194,7 +183,14 @@ public class Usuarios {
             instruccion.setString(1, nombredeusuarios);
             resultado = instruccion.executeQuery();
 
-            return resultado.next();
+            if (resultado.next()) {
+            System.out.println("El nombre de usuario existe. ❌ ");
+            return false;
+        } else {
+            System.out.println("️ El nombre de usuario no existe. ☑");
+            return true;
+        }
+
         } catch (SQLException e) {
             System.out.println("EL error es: " + e);
             return false;
@@ -295,5 +291,6 @@ public class Usuarios {
 
     public static void main(String[] args) {
         // Método main vacío
+
     }
 }

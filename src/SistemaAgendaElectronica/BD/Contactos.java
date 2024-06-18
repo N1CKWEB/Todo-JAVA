@@ -18,15 +18,13 @@ public class Contactos {
     Conexion conexion = new Conexion();
     Connection sl = conexion.conectar();
     boolean eliminado = false;
+
     public Contactos() {
 
     }
 
     //METODOS DE CONTACTOS (CRUD)
-    
     //MÉTODO PARA AGREGAR CONTACTOS y para agregar contactos a la base de datos
-    
-
     public boolean agregarContactos(String dni, String nombre, String apellido, String direccion, String localidad) {
         if (dni == null || dni.trim().isEmpty() || nombre == null || nombre.trim().isEmpty() || elDniExisteParaContacto(dni)) {
             JOptionPane.showMessageDialog(null, dni == null || dni.trim().isEmpty() ? "El DNI es obligatorio." : "El DNI ya está registrado.");
@@ -70,105 +68,105 @@ public class Contactos {
             } else {
 
                 JOptionPane.showMessageDialog(null, "!Su consulta no existe!");
-                this.logueado = true;
+                this.logueado = false;
                 return logueado;
             }
 
         } catch (SQLException e) {
 
             JOptionPane.showMessageDialog(null, "!ERROR! y su error es: " + e);
-           return false;
+            return false;
         }
-        
+
     }
-    
+
     //MÉTODO PARA MODIFICAR CONTACTO
     public boolean modificarContacto(String dni, String nombre, String apellido, String direccion, String localidad, String dniUsuario) {
-    StringBuilder consulta = new StringBuilder("UPDATE contactosdeusuarios SET ");
-    boolean primero = true;
-
-    if (nombre != null && !nombre.isEmpty()) {
-        consulta.append("nombre = ?");
-        primero = false;
-    }
-    if (apellido != null && !apellido.isEmpty()) {
-        if (!primero) {
-            consulta.append(", ");
-        }
-        consulta.append("apellido = ?");
-        primero = false;
-    }
-    if (direccion != null && !direccion.isEmpty()) {
-        if (!primero) {
-            consulta.append(", ");
-        }
-        consulta.append("direccion = ?");
-        primero = false;
-    }
-    if (localidad != null && !localidad.isEmpty()) {
-        if (!primero) {
-            consulta.append(", ");
-        }
-        consulta.append("localidad = ?");
-        primero = false;
-    }
-    if (dni != null && !dni.isEmpty()) {
-        if (!primero) {
-            consulta.append(", ");
-        }
-        consulta.append("dni = ?");
-    }
-
-    consulta.append(" WHERE dni = ?");
-
-    PreparedStatement instruccion = null;
-    boolean actualizado = false;
-
-    try {
-        instruccion = sl.prepareStatement(consulta.toString());
-        int index = 1;
+        StringBuilder consulta = new StringBuilder("UPDATE contactosdeusuarios SET ");
+        boolean primero = true;
 
         if (nombre != null && !nombre.isEmpty()) {
-            instruccion.setString(index++, nombre);
+            consulta.append("nombre = ?");
+            primero = false;
         }
         if (apellido != null && !apellido.isEmpty()) {
-            instruccion.setString(index++, apellido);
+            if (!primero) {
+                consulta.append(", ");
+            }
+            consulta.append("apellido = ?");
+            primero = false;
         }
         if (direccion != null && !direccion.isEmpty()) {
-            instruccion.setString(index++, direccion);
+            if (!primero) {
+                consulta.append(", ");
+            }
+            consulta.append("direccion = ?");
+            primero = false;
         }
         if (localidad != null && !localidad.isEmpty()) {
-            instruccion.setString(index++, localidad);
+            if (!primero) {
+                consulta.append(", ");
+            }
+            consulta.append("localidad = ?");
+            primero = false;
         }
         if (dni != null && !dni.isEmpty()) {
-            instruccion.setString(index++, dni);
+            if (!primero) {
+                consulta.append(", ");
+            }
+            consulta.append("dni = ?");
         }
 
-        instruccion.setString(index, dniUsuario);
+        consulta.append(" WHERE dni = ?");
 
-        int filasAfectadas = instruccion.executeUpdate();
-        if (filasAfectadas > 0) {
-            JOptionPane.showMessageDialog(null, "Contacto modificado correctamente.");
-            actualizado = true;
-        } else {
-            JOptionPane.showMessageDialog(null, "No se encontró un contacto con el DNI especificado.");
-        }
-    } catch (SQLException e) {
-        System.out.println("Error al modificar el contacto: " + e.getMessage());
-    } finally {
-        if (instruccion != null) {
-            try {
-                instruccion.close();
-            } catch (SQLException e) {
-                System.out.println("Error al cerrar el PreparedStatement: " + e.getMessage());
+        PreparedStatement instruccion = null;
+        boolean actualizado = false;
+
+        try {
+            instruccion = sl.prepareStatement(consulta.toString());
+            int index = 1;
+
+            if (nombre != null && !nombre.isEmpty()) {
+                instruccion.setString(index++, nombre);
+            }
+            if (apellido != null && !apellido.isEmpty()) {
+                instruccion.setString(index++, apellido);
+            }
+            if (direccion != null && !direccion.isEmpty()) {
+                instruccion.setString(index++, direccion);
+            }
+            if (localidad != null && !localidad.isEmpty()) {
+                instruccion.setString(index++, localidad);
+            }
+            if (dni != null && !dni.isEmpty()) {
+                instruccion.setString(index++, dni);
+            }
+
+            instruccion.setString(index, dniUsuario);
+
+            int filasAfectadas = instruccion.executeUpdate();
+            if (filasAfectadas > 0) {
+                JOptionPane.showMessageDialog(null, "Contacto modificado correctamente.");
+                actualizado = true;
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró un contacto con el DNI especificado.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al modificar el contacto: " + e.getMessage());
+        } finally {
+            if (instruccion != null) {
+                try {
+                    instruccion.close();
+                } catch (SQLException e) {
+                    System.out.println("Error al cerrar el PreparedStatement: " + e.getMessage());
+                }
             }
         }
+
+        return actualizado;
     }
 
-    return actualizado;
-}
-    
-  //MÉTODO PARA ELIMINAR CONTACTOS
+    //MÉTODO PARA ELIMINAR CONTACTOS
     public boolean eliminarContacto(String dni, String nombre) {
 
         try {
@@ -195,82 +193,112 @@ public class Contactos {
         }
         return eliminado;
     }
-    //Método para verificar todos los campos de la agenda si están bien o no.
-  public boolean verificacionDeContacto(String dni, String nombre, String apellido, String direccion, String localidad) {
-    // Validar el formato del DNI
-    if (!elDniEsValidoParaContacto(dni)) {
-        JOptionPane.showMessageDialog(null, "El dni no es válido, debe contener entre 8 y 9 dígitos ❌");
-        return false;
-    }
+//MÉTODO PARA CONSULTAR TODO LOS CONTACTOS
 
-    // Validar el nombre
-    if (!elNombreEsValidoParaContacto(nombre)) {
-        JOptionPane.showMessageDialog(null, "El nombre no es válido, debe contener letras ❌");
-        return false;
-    }
+    public boolean consultarTodosLosContactos() {
+        try {
+            String consulta = "SELECT * FROM contactosdeusuarios";
+            instruccion = sl.prepareStatement(consulta);
+            resultado = instruccion.executeQuery();
 
-    // Validar el apellido
-    if (!elApellidoEsValidoParaContacto(apellido)) {
-        JOptionPane.showMessageDialog(null, "El apellido no es válido, debe contener letras ❌");
-        return false;
-    }
-
-    // Validar la dirección
-    if (!laDireccionEsValidaParaContacto(direccion)) {
-        JOptionPane.showMessageDialog(null, "La dirección no es válida, debe contener letras y números ❌");
-        return false;
-    }
-
-    // Validar la localidad
-    if (!laLocalidadEsValidaParaContacto(localidad)) {
-        JOptionPane.showMessageDialog(null, "La localidad no es válida, debe contener letras ❌");
-        return false;
-    }
-
-    // Verificar si el DNI ya existe en la base de datos
-    if (elDniExisteParaContacto(dni)) {
-        JOptionPane.showMessageDialog(null, "El DNI ya está registrado ❌");
-        return false;
-    }
-
-    // Verificar si la dirección ya existe en la base de datos
-    if (laDireccionExisteParaContacto(direccion)) {
-        JOptionPane.showMessageDialog(null, "La dirección ya está registrada ❌");
-        return false;
-    }
-
-    // Si todas las validaciones pasan, se procede a agregar el contacto a la base de datos
-    try {
-        // Se verifica nuevamente si el usuario existe en la base de datos (por seguridad)
-        String consulta = "SELECT 1 FROM contactosdeusuarios WHERE dni = ?";
-        instruccion = sl.prepareStatement(consulta);
-        instruccion.setString(1, dni);
-
-        try (ResultSet resultado = instruccion.executeQuery()) {
             if (resultado.next()) {
-                JOptionPane.showMessageDialog(null, "El usuario ya está registrado ❌");
-                return false;
+                JOptionPane.showMessageDialog(null, "Su consulta de todos los contactos fue correcta ☑");
+                this.logueado = true;
+                return logueado;
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontraron contactos ❌");
+                this.logueado = false;
+                return logueado;
             }
+        } catch (SQLException e) {
+            System.out.println("El error es: " + e);
+            this.logueado = false;
+            return logueado;
         }
-
-        // Si no se encontró un usuario existente, se procede a registrarlo
-        try (PreparedStatement insertInstruccion = sl.prepareStatement("INSERT INTO contactosdeusuarios (dni, nombre, apellido, direccion, localidad) VALUES (?, ?, ?, ?, ?)")) {
-            insertInstruccion.setString(1, dni);
-            insertInstruccion.setString(2, nombre);
-            insertInstruccion.setString(3, apellido);
-            insertInstruccion.setString(4, direccion);
-            insertInstruccion.setString(5, localidad);
-            insertInstruccion.executeUpdate();
-        }
-
-        return true;
-
-    } catch (SQLException e) {
-        System.out.println("Error al registrar el contacto: " + e.getMessage());
-        return false;
     }
-}
 
+    //MÉTODO PARA ELIMINAR TODO LOS CONTACTOS
+    public boolean eliminarTodosLosContactos() {
+        try {
+            String consulta = "DELETE FROM contactosdeusuarios";
+            instruccion = sl.prepareStatement(consulta);
+
+            int filasAfectadas = instruccion.executeUpdate();
+            if (filasAfectadas > 0) {
+                eliminado = true;
+                JOptionPane.showMessageDialog(null, "Se eliminaron correctamente todos los contactos ☑️");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo eliminar a todos los contactos ❌");
+                eliminado = false;
+            }
+            return eliminado;
+        } catch (SQLException e) {
+            System.out.println("El error es: " + e);
+            return false;
+        }
+    }
+
+    //Método para verificar todos los campos de la agenda si están bien o no.
+    public boolean verificacionDeContacto(String dni, String nombre, String apellido, String direccion, String localidad) {
+        // Validar el formato del DNI
+        if (!elDniEsValidoParaContacto(dni)) {
+            JOptionPane.showMessageDialog(null, "El dni no es válido, debe contener entre 8 y 9 dígitos ❌");
+            return false;
+        }
+        if (!elNombreEsValidoParaContacto(nombre)) {
+            JOptionPane.showMessageDialog(null, "El nombre no es válido, debe contener letras ❌");
+            return false;
+        }
+
+        // Validar la localidad
+        if (!laLocalidadEsValidaParaContacto(localidad)) {
+            JOptionPane.showMessageDialog(null, "La localidad no es válida, debe contener letras ❌");
+            return false;
+        }
+
+        // Verificar si el DNI ya existe en la base de datos
+        if (elDniExisteParaContacto(dni)) {
+            JOptionPane.showMessageDialog(null, "El DNI ya está registrado ❌");
+            return false;
+        }
+
+        // Verificar si la dirección ya existe en la base de datos
+        if (laDireccionExisteParaContacto(direccion)) {
+            JOptionPane.showMessageDialog(null, "La dirección ya está registrada ❌");
+            return false;
+        }
+
+        // Si todas las validaciones pasan, se procede a agregar el contacto a la base de datos
+        try {
+            // Se verifica nuevamente si el usuario existe en la base de datos (por seguridad)
+            String consulta = "SELECT 1 FROM contactosdeusuarios WHERE dni = ?";
+            instruccion = sl.prepareStatement(consulta);
+            instruccion.setString(1, dni);
+
+            try (ResultSet resultado = instruccion.executeQuery()) {
+                if (resultado.next()) {
+                    JOptionPane.showMessageDialog(null, "El usuario ya está registrado ❌");
+                    return false;
+                }
+            }
+
+            // Si no se encontró un usuario existente, se procede a registrarlo
+            try (PreparedStatement insertInstruccion = sl.prepareStatement("INSERT INTO contactosdeusuarios (dni, nombre, apellido, direccion, localidad) VALUES (?, ?, ?, ?, ?)")) {
+                insertInstruccion.setString(1, dni);
+                insertInstruccion.setString(2, nombre);
+                insertInstruccion.setString(3, apellido);
+                insertInstruccion.setString(4, direccion);
+                insertInstruccion.setString(5, localidad);
+                insertInstruccion.executeUpdate();
+            }
+
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println("Error al registrar el contacto: " + e.getMessage());
+            return false;
+        }
+    }
 
     public boolean elDniEsValidoParaContacto(String dni) {
 
@@ -281,45 +309,42 @@ public class Contactos {
         return true;
     }
 
-
     public boolean elNombreEsValidoParaContacto(String nombre) {
-        
-        
-          String regex = ".*[a-zA-Z].*";
+
+        String regex = ".*[a-zA-Z].*";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(nombre);
 
         JOptionPane.showMessageDialog(null, "El nombre contiene letras ☑️");
 
         return matcher.matches();
-        
+
     }
 
     public boolean elApellidoEsValidoParaContacto(String apellido) {
-      String regex = ".*[a-zA-Z].*";
+        String regex = ".*[a-zA-Z].*";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(apellido);
 
         JOptionPane.showMessageDialog(null, "El apellido contiene letras ☑️");
 
-        return matcher.matches();      
+        return matcher.matches();
     }
 
     public boolean laDireccionEsValidaParaContacto(String direccion) {
-    // Verificar presencia de números y letras
-    if (!direccion.matches(".*[0-9].*") || !direccion.matches(".*[a-zA-Z].*")) {
-       JOptionPane.showMessageDialog(null,"La dirección contiene letras y números ☑️");
-    }
-           return true;
-    }
-
-    public boolean laLocalidadEsValidaParaContacto(String localidad) {
-        if(localidad.matches("[a-zA-Z\s]+") && !localidad.matches(".*[0-9].*")){
-         JOptionPane.showMessageDialog(null, "La localidad contiene letras ☑");
+        // Verificar presencia de números y letras
+        if (!direccion.matches(".*[0-9].*") || !direccion.matches(".*[a-zA-Z].*")) {
+            JOptionPane.showMessageDialog(null, "La dirección contiene letras y números ☑️");
         }
         return true;
     }
 
+    public boolean laLocalidadEsValidaParaContacto(String localidad) {
+        if (localidad.matches("[a-zA-Z\s]+") && !localidad.matches(".*[0-9].*")) {
+            JOptionPane.showMessageDialog(null, "La localidad contiene letras ☑");
+        }
+        return true;
+    }
 
     public boolean elDniExisteParaContacto(String dni) {
 
