@@ -1,7 +1,7 @@
 package SistemaAgendaElectronica.BD;
 
+import SistemaAgendaElectronica.Servicios.Encriptado;
 import SistemaAgendaElectronica.Servicios.EnviarCorreoElectronico;
-import java.awt.Image;
 import java.sql.ResultSet;
 import java.security.InvalidParameterException;
 import java.sql.PreparedStatement;
@@ -14,11 +14,6 @@ import java.util.logging.Logger;
 import java.sql.DriverManager;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import static javax.swing.SpringLayout.HEIGHT;
-import static javax.swing.SpringLayout.WIDTH;
 
 public class Usuarios {
 
@@ -49,19 +44,34 @@ public class Usuarios {
 
     // METODOS DE USUARIO PARA REGISTRARSE
     public Boolean agregarRegistrarse(String nombredeusuarios, String correo, String contraseña) {
-        try {
-            String consulta = "INSERT INTO usuarios (nombredeusuarios, correo, contraseña) VALUES (? , ? , ?)";
-            instruccion = sl.prepareStatement(consulta);
+      try {
+          
+         Encriptado encriptar=new Encriptado();
+         
+        // 1. Encriptar la contraseña antes de guardarla
+         String contraseñaEncriptada = encriptar.encriptarContraseña(contraseña);
 
-            instruccion.setString(1, nombredeusuarios);
-            instruccion.setString(2, correo);
-            instruccion.setString(3, contraseña);
+        if (contraseñaEncriptada == null) {
+            // Manejo de errores de encriptación
+            registrado = false;
+            return registrado;
+        }
 
-            instruccion.executeUpdate();
+        String consulta = "INSERT INTO usuarios (nombredeusuarios, correo, contraseña) VALUES (?, ?, ?)";
+        instruccion = sl.prepareStatement(consulta);
+        
+          System.out.println("La contraseña encriptada es: "+contraseña);
+          
+        instruccion.setString(1, nombredeusuarios);
+        instruccion.setString(2, correo);
+        instruccion.setString(3, contraseñaEncriptada); // Guardamos la contraseña encriptada
 
+        instruccion.executeUpdate();
+         
             registrado = true;
             return registrado;
 
+            
         } catch (SQLException e) {
             registrado = false;
             return registrado;
@@ -70,10 +80,7 @@ public class Usuarios {
 
     // METODOS DE USUARIO PARA VERIFICAR INICIO DE SESION
     public Boolean verificacionInicioDeSesion(String correo, String contraseña) {
-        if (!elCorreoEsValidoParaIniciarSesion(correo)) {
-            JOptionPane.showMessageDialog(null, "El correo no es valido. Debe contener '@' y terminar 'gmail.com' ❌");
-            return false;
-        }
+        
 
         try {
             String query = "SELECT * FROM usuarios WHERE correo = ? AND contraseña = ?";
@@ -101,11 +108,18 @@ public class Usuarios {
         }
     }
 
+    // METODOS DE USUARIOS PARA VERIFICAR EL INICIO DE SESIÓN
     public boolean elCorreoEsValidoParaIniciarSesion(String correo) {
         String regex = "^[\\w-\\.]+@((gmail\\.com))$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(correo);
-
+          
+        if (matcher.matches()) {
+           JOptionPane.showMessageDialog(null, "El correo contiene lo pedido para Iniciar Sesión! ☑️");
+        }else{
+           JOptionPane.showMessageDialog(null, "El correo no es valido. Debe contener '@' y terminar 'gmail.com' ❌");
+        }
+        
         return matcher.matches();
     }
 

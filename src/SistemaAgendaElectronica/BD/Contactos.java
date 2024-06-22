@@ -240,33 +240,6 @@ public class Contactos {
 
     //Método para verificar todos los campos de la agenda si están bien o no.
     public boolean verificacionDeContacto(String dni, String nombre, String apellido, String direccion, String localidad) {
-        // Validar el formato del DNI
-        if (!elDniEsValidoParaContacto(dni)) {
-            JOptionPane.showMessageDialog(null, "El dni no es válido, debe contener entre 8 y 9 dígitos ❌");
-            return false;
-        }
-        if (!elNombreEsValidoParaContacto(nombre)) {
-            JOptionPane.showMessageDialog(null, "El nombre no es válido, debe contener letras ❌");
-            return false;
-        }
-
-        // Validar la localidad
-        if (!laLocalidadEsValidaParaContacto(localidad)) {
-            JOptionPane.showMessageDialog(null, "La localidad no es válida, debe contener letras ❌");
-            return false;
-        }
-
-        // Verificar si el DNI ya existe en la base de datos
-        if (elDniExisteParaContacto(dni)) {
-            JOptionPane.showMessageDialog(null, "El DNI ya está registrado ❌");
-            return false;
-        }
-
-        // Verificar si la dirección ya existe en la base de datos
-        if (laDireccionExisteParaContacto(direccion)) {
-            JOptionPane.showMessageDialog(null, "La dirección ya está registrada ❌");
-            return false;
-        }
 
         // Si todas las validaciones pasan, se procede a agregar el contacto a la base de datos
         try {
@@ -302,11 +275,15 @@ public class Contactos {
 
     public boolean elDniEsValidoParaContacto(String dni) {
 
-        if (dni.length() == 8 || dni.length() == 9) {
-            JOptionPane.showMessageDialog(null, "El dni contiene entre 8 y 9 dígitos ☑️");
+        Pattern patron = Pattern.compile("^\\d{7,8}$");
+        Matcher matcher = patron.matcher(dni);
 
+        if (matcher.matches()) {
+            JOptionPane.showMessageDialog(null,"Correcto el DNI ☑️");
+        } else {
+            JOptionPane.showMessageDialog(null,"Incorrecto el DNI ❌");
         }
-        return true;
+        return matcher.matches();
     }
 
     public boolean elNombreEsValidoParaContacto(String nombre) {
@@ -315,8 +292,11 @@ public class Contactos {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(nombre);
 
-        JOptionPane.showMessageDialog(null, "El nombre contiene letras ☑️");
-
+        if (matcher.matches()) {
+            JOptionPane.showMessageDialog(null,"Correcto el Nombre ☑️");
+        } else {
+            JOptionPane.showMessageDialog(null,"Incorrecto el Nombre ❌");
+        }
         return matcher.matches();
 
     }
@@ -326,24 +306,41 @@ public class Contactos {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(apellido);
 
-        JOptionPane.showMessageDialog(null, "El apellido contiene letras ☑️");
-
+        if (matcher.matches()) {
+            JOptionPane.showMessageDialog(null,"Correcto el Apellido ☑️");
+        } else {
+            JOptionPane.showMessageDialog(null,"Incorrecto el Apellido ❌");
+        }
         return matcher.matches();
     }
 
     public boolean laDireccionEsValidaParaContacto(String direccion) {
+
         // Verificar presencia de números y letras
-        if (!direccion.matches(".*[0-9].*") || !direccion.matches(".*[a-zA-Z].*")) {
-            JOptionPane.showMessageDialog(null, "La dirección contiene letras y números ☑️");
+        String regex = "^(?=.*[0-9])(?=.*[a-zA-Z]).*$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(direccion);
+
+        if (matcher.matches()) {
+            JOptionPane.showMessageDialog(null,"Correcta la dirección ☑️");
+        } else {
+            JOptionPane.showMessageDialog(null,"Incorrecta la dirección ❌");
         }
-        return true;
+        return matcher.matches();
     }
 
     public boolean laLocalidadEsValidaParaContacto(String localidad) {
-        if (localidad.matches("[a-zA-Z\s]+") && !localidad.matches(".*[0-9].*")) {
-            JOptionPane.showMessageDialog(null, "La localidad contiene letras ☑");
+
+        String regex = "^[a-zA-Z\s]+$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(localidad);
+
+        if (matcher.matches()) {
+            JOptionPane.showMessageDialog(null,"Correcta la localidad ☑️");
+        } else {
+            JOptionPane.showMessageDialog(null,"Incorrecta la dirección ❌");
         }
-        return true;
+        return matcher.matches();
     }
 
     public boolean elDniExisteParaContacto(String dni) {
@@ -356,7 +353,14 @@ public class Contactos {
 
             resultado = instruccion.executeQuery();
 
-            return resultado.next();
+            if (resultado.next()) {
+                System.out.println("El DNI existe. ❌ ");
+                return false;
+            } else {
+                System.out.println("El DNI no existe. ☑");
+                return true;
+            }
+
         } catch (SQLException e) {
             System.out.println("El error es: " + e);
             return false;
@@ -371,8 +375,15 @@ public class Contactos {
             instruccion.setString(1, direccion);
 
             resultado = instruccion.executeQuery();
-
-            return resultado.next();
+            
+            if (resultado.next()) {
+                System.out.println("La dirreción existe. ❌ ");
+                return false;
+            } else {
+                System.out.println("La dirección no existe. ☑");
+                return true;
+            }
+            
         } catch (SQLException e) {
             System.out.println("El error es: " + e);
             return false;

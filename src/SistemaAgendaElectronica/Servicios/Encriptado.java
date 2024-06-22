@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  */
 public class Encriptado {
     
-    public void encriptarContraseña(String contraseña) {
+    public String encriptarContraseña(String contraseña) {
         // Solicita al usuario que ingrese un texto
         if (contraseña != null && !contraseña.isEmpty()) {
             try {
@@ -31,6 +31,9 @@ public class Encriptado {
 
                 // Muestra el hash utilizando JOptionPane
                 JOptionPane.showMessageDialog(null, "SHA-256 Hash: " + hashedValue);
+             
+                return bytesToHex(encodedHash); // Devolvemos el hash como String
+
             } catch (NoSuchAlgorithmException e) {
                 System.out.println("El error es:" + e);
             }
@@ -39,6 +42,7 @@ public class Encriptado {
             JOptionPane.showMessageDialog(null, "No se proporcionó ningún texto.");
         }
         System.out.println("La contraseña encriptada es:" + contraseña);
+        return null;
     }
 
 

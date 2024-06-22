@@ -305,10 +305,9 @@ public class Ventana1 extends javax.swing.JFrame {
             
                 
             
+            // Agrega el usuario y encripta la contraseña 
             user.agregarRegistrarse(usuario, correo, contraseña);
 
-            // Encriptar la contraseña
-            encriptar.encriptarContraseña(contraseña); // Aquí se encripta la contraseña
             JOptionPane.showMessageDialog(null, "¡Usuario registrado exitosamente!");
             v2.setDato(txtUSuarioRegistrarse.getText());
             v2.setVisible(true);
@@ -399,11 +398,16 @@ public class Ventana1 extends javax.swing.JFrame {
         v2.setVisible(true);
         this.setVisible(false);
         v2.setLocationRelativeTo(null);
-
-        user.elCorreoEsValidoParaIniciarSesion(correo);
-        user.verificacionInicioDeSesion(correo, contraseña);
-        v2.setDato(txtUSuarioSesion.getText());
-
+        
+        if (user.elCorreEsValidoParaRegistrarse(correo) && user.verificacionInicioDeSesion(correo, contraseña)) {
+            v2.setDato(txtUSuarioSesion.getText());
+            JOptionPane.showMessageDialog(null,"Correcto!!");
+        }else{
+            JOptionPane.showMessageDialog(null,"Incorrecto");
+        }
+        
+        txtUSuarioSesion.setText(null);
+        txtContraseñaSesion.setText(null);
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
     private void txtUSuarioSesionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUSuarioSesionKeyReleased
