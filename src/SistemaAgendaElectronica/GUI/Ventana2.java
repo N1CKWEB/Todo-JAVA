@@ -5,7 +5,18 @@
 package SistemaAgendaElectronica.GUI;
 
 import SistemaAgendaElectronica.BD.Contactos;
+import java.awt.Component;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.ListCellRenderer;
 
 /**
  *
@@ -27,7 +38,21 @@ public class Ventana2 extends javax.swing.JFrame {
         this.dato = dato;
         txtEnvioDeUsuario2.setText(dato);
     }
+public class ContactListRenderer extends JTextArea implements ListCellRenderer<String> {
 
+    public ContactListRenderer() {
+        setLineWrap(true);
+        setWrapStyleWord(true);
+    }
+
+    public Component getListCellRendererComponent(JList<? extends String> list, String value, int index, boolean isSelected, boolean cellHasFocus) {
+        setText(value);
+        setBackground(isSelected ? list.getSelectionBackground() : list.getBackground());
+        setForeground(isSelected ? list.getSelectionForeground() : list.getForeground());
+        setFont(list.getFont());
+        return this;
+    }
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -234,6 +259,11 @@ public class Ventana2 extends javax.swing.JFrame {
         jPanel1.add(jLabel11);
         jLabel11.setBounds(10, 40, 90, 39);
 
+        txtAgregarDireccion2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtAgregarDireccion2ActionPerformed(evt);
+            }
+        });
         txtAgregarDireccion2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtAgregarDireccion2KeyReleased(evt);
@@ -315,15 +345,15 @@ public class Ventana2 extends javax.swing.JFrame {
                         .addGap(38, 38, 38)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txtConsultarDni, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtConsultarNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                            .addComponent(txtConsultarNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(53, 53, 53)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnConsultarContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnConsultarContacto1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(116, 116, 116)))
-                .addComponent(txtPantallaDeContactos, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                .addContainerGap())
+                            .addComponent(btnConsultarContacto1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtPantallaDeContactos, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
+                .addGap(18, 18, 18))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -343,7 +373,7 @@ public class Ventana2 extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnConsultarContacto1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
+                        .addGap(24, 24, 24)
                         .addComponent(txtPantallaDeContactos, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(45, Short.MAX_VALUE))
         );
@@ -448,7 +478,7 @@ public class Ventana2 extends javax.swing.JFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(183, 183, 183)
                         .addComponent(btnModificarContacto1, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(134, Short.MAX_VALUE))
+                .addContainerGap(219, Short.MAX_VALUE))
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel4Layout.createSequentialGroup()
                     .addContainerGap()
@@ -569,7 +599,7 @@ public class Ventana2 extends javax.swing.JFrame {
                             .addComponent(btnEliminarContacto4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnEliminarContacto2, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE))))
                 .addGap(18, 18, 18)
-                .addComponent(txtPantallaDeContactos3, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                .addComponent(txtPantallaDeContactos3, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -825,12 +855,32 @@ public class Ventana2 extends javax.swing.JFrame {
     private void btnConsultarContacto1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarContacto1ActionPerformed
     
         Contactos todosConsultarContactos=new Contactos();
-      
-        todosConsultarContactos.consultarTodosLosContactos();
+
+     try {
+            List<String> contactos = todosConsultarContactos.consultarTodosLosContactos();
+            DefaultListModel<String> model = new DefaultListModel<>();
+            StringBuilder builder = new StringBuilder();
+
+            for (String contacto : contactos) {
+                model.addElement(contacto);
+                builder.append(contacto).append("\n");
+            }
+
+            // Suponiendo que tienes un JTextField llamado "txtField"
+              txtPantallaDeContactos.setText(builder.toString());
+            
+        
+        
+       
+        } catch (SQLException ex) {
+            System.out.println("El error es: "+ex);
+        
+        }
     
     }//GEN-LAST:event_btnConsultarContacto1ActionPerformed
 
     private void btnEliminarContacto4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarContacto4ActionPerformed
+        
         Contactos todosEliminarContactos=new Contactos();
         
         todosEliminarContactos.eliminarTodosLosContactos();
@@ -842,6 +892,10 @@ public class Ventana2 extends javax.swing.JFrame {
               ventana1.setVisible(true);
               this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtAgregarDireccion2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAgregarDireccion2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtAgregarDireccion2ActionPerformed
 
     /**
      * @param args the command line arguments

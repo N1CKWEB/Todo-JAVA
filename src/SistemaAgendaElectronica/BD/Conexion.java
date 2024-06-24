@@ -4,6 +4,7 @@ package SistemaAgendaElectronica.BD;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,5 +59,9 @@ public class Conexion {
         conexion.conectar();
         
         
+    }
+
+    PreparedStatement prepareStatement(String consulta) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

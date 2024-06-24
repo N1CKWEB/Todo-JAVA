@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
@@ -193,30 +195,38 @@ public class Contactos {
         }
         return eliminado;
     }
+          
+    
+
 //MÉTODO PARA CONSULTAR TODO LOS CONTACTOS
-
-    public boolean consultarTodosLosContactos() {
+ public List<String> consultarTodosLosContactos() throws SQLException {
+        List<String> contactos = new ArrayList<>();
+        
+        String consulta = "SELECT * FROM contactosdeusuarios";
         try {
-            String consulta = "SELECT * FROM contactosdeusuarios";
             instruccion = sl.prepareStatement(consulta);
-            resultado = instruccion.executeQuery();
+           resultado = instruccion.executeQuery();
+              
+            while (resultado.next()) {
+                String dni = resultado.getString("dni");
+                String nombre = resultado.getString("nombre");
+                String apellido = resultado.getString("apellido");
+                String direccion = resultado.getString("direccion");
+                String localidad = resultado.getString("localidad");
 
-            if (resultado.next()) {
-                JOptionPane.showMessageDialog(null, "Su consulta de todos los contactos fue correcta ☑");
-                this.logueado = true;
-                return logueado;
-            } else {
-                JOptionPane.showMessageDialog(null, "No se encontraron contactos ❌");
-                this.logueado = false;
-                return logueado;
+                String contacto = "DNI: " + dni + "\n" +
+                                  "Nombre: " + nombre + "\n" +
+                                  "Apellido: " + apellido + "\n" +
+                                  "Dirección: " + direccion + "\n" +
+                                  "Localidad: " + localidad + "\n" +
+                                  "--------------------------------";
+                contactos.add(contacto);
             }
         } catch (SQLException e) {
-            System.out.println("El error es: " + e);
-            this.logueado = false;
-            return logueado;
-        }
-    }
-
+            System.out.println("El error es:" + e);
+        } 
+          return contactos;
+ }
     //MÉTODO PARA ELIMINAR TODO LOS CONTACTOS
     public boolean eliminarTodosLosContactos() {
         try {
@@ -338,7 +348,7 @@ public class Contactos {
         if (matcher.matches()) {
             JOptionPane.showMessageDialog(null,"Correcta la localidad ☑️");
         } else {
-            JOptionPane.showMessageDialog(null,"Incorrecta la dirección ❌");
+            JOptionPane.showMessageDialog(null,"Incorrecta la localidad ❌");
         }
         return matcher.matches();
     }
