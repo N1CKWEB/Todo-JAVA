@@ -123,7 +123,7 @@ public class Ventana2 extends javax.swing.JFrame {
             }
         });
         jPanel1.add(loginBtn10);
-        loginBtn10.setBounds(240, 20, 60, 60);
+        loginBtn10.setBounds(320, 20, 60, 60);
 
         jLabel42.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         jLabel42.setForeground(new java.awt.Color(0, 204, 204));
@@ -213,7 +213,7 @@ public class Ventana2 extends javax.swing.JFrame {
         txtEnvioDeUsuario2.setForeground(new java.awt.Color(0, 204, 204));
         txtEnvioDeUsuario2.setText("...........................................");
         jPanel1.add(txtEnvioDeUsuario2);
-        txtEnvioDeUsuario2.setBounds(84, 40, 170, 39);
+        txtEnvioDeUsuario2.setBounds(84, 40, 250, 39);
 
         txtAgregarLocalidad2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -837,7 +837,10 @@ public class Ventana2 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarContacto4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+              Ventana1 ventana1=new Ventana1();
+              
+              ventana1.setVisible(true);
+              this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

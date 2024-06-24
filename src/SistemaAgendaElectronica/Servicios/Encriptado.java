@@ -46,11 +46,15 @@ public class Encriptado {
     }
 
 
-    public static void validarContraseña(String contraseña) {
+    public boolean validarContraseña(String contraseña) {
         if (isValidPassword(contraseña)) {
             JOptionPane.showMessageDialog(null, "¡Contraseña válida!");
+            return true;
+
         } else {
             JOptionPane.showMessageDialog(null, "¡Contraseña no válida! Debe cumplir con los criterios.");
+            return false;
+        
         }
     }
   
@@ -91,4 +95,6 @@ public class Encriptado {
 //        
 //        encriptar.encriptarContraseña(contraseña);
     }
+
+    
 }

@@ -44,7 +44,8 @@ public class Usuarios {
 
     // METODOS DE USUARIO PARA REGISTRARSE
     public Boolean agregarRegistrarse(String nombredeusuarios, String correo, String contraseña) {
-      try {
+      
+        try {
           
          Encriptado encriptar=new Encriptado();
          
@@ -151,21 +152,7 @@ public class Usuarios {
         return matcher.matches();
     }
 
-    public boolean laContraseñaEsValidoParaRegistrarse(String contraseña) {
-        // Expresión regular para verificar la contraseña
-        String regex = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+=]).{12,}$";
-
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(contraseña);
-
-        if (contraseña.matches(regex)) {
-            JOptionPane.showMessageDialog(null, "La contraseña es valida ☑");
-        } else {
-            JOptionPane.showMessageDialog(null, "La contraseña no es valida, no contiene lo pedido ❌");
-        }
-
-        return matcher.matches();
-    }
+    
 
     public boolean correoExisteDeRegistrarse(String correo) {
         try {

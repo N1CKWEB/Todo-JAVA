@@ -7,6 +7,8 @@ package SistemaAgendaElectronica.GUI;
 import SistemaAgendaElectronica.Servicios.Encriptado;
 import SistemaAgendaElectronica.BD.Usuarios;
 import SistemaAgendaElectronica.Servicios.EnviarCorreoElectronico;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.MessagingException;
@@ -37,15 +39,17 @@ public class Ventana1 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jSeparator1 = new javax.swing.JSeparator();
         jTabbedPane4 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         lbUsuarioSesion = new javax.swing.JLabel();
         txtUSuarioSesion = new javax.swing.JTextField();
-        txtContraseñaSesion = new javax.swing.JTextField();
         btnRecuperarContraseñaSesion = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btnIniciarSesion = new javax.swing.JButton();
+        txtContraseñaSesion = new javax.swing.JPasswordField();
+        btnVista = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         lbUsuarioSesion2 = new javax.swing.JLabel();
@@ -54,6 +58,7 @@ public class Ventana1 extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         txtContraseñaRegistrarse = new javax.swing.JPasswordField();
         btnRegistrarte = new javax.swing.JButton();
+        btnVista2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -81,17 +86,6 @@ public class Ventana1 extends javax.swing.JFrame {
             }
         });
 
-        txtContraseñaSesion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtContraseñaSesionActionPerformed(evt);
-            }
-        });
-        txtContraseñaSesion.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtContraseñaSesionKeyReleased(evt);
-            }
-        });
-
         btnRecuperarContraseñaSesion.setBackground(new java.awt.Color(102, 102, 255));
         btnRecuperarContraseñaSesion.setFont(new java.awt.Font("Arial Black", 0, 10)); // NOI18N
         btnRecuperarContraseñaSesion.setText("RECUPERAR CONTRASEÑA");
@@ -113,44 +107,70 @@ public class Ventana1 extends javax.swing.JFrame {
             }
         });
 
+        txtContraseñaSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtContraseñaSesionActionPerformed(evt);
+            }
+        });
+        txtContraseñaSesion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtContraseñaSesionKeyReleased(evt);
+            }
+        });
+
+        btnVista.setBackground(new java.awt.Color(102, 102, 255));
+        btnVista.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        btnVista.setText("👁️️");
+        btnVista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVistaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 79, Short.MAX_VALUE)
+                .addGap(23, 64, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(lbUsuarioSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtContraseñaSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtUSuarioSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(54, 54, 54))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(13, 13, 13)
+                                .addComponent(txtUSuarioSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(txtContraseñaSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnVista)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnRecuperarContraseñaSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1))
                         .addGap(37, 37, 37))))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(150, 150, 150)
+                .addGap(163, 163, 163)
                 .addComponent(btnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(55, Short.MAX_VALUE)
+                .addContainerGap(45, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbUsuarioSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtUSuarioSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtContraseñaSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
+                    .addComponent(txtContraseñaSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVista, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
                 .addComponent(btnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -217,26 +237,38 @@ public class Ventana1 extends javax.swing.JFrame {
             }
         });
 
+        btnVista2.setBackground(new java.awt.Color(102, 102, 255));
+        btnVista2.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        btnVista2.setText("👁️");
+        btnVista2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVista2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(92, Short.MAX_VALUE)
+                .addContainerGap(76, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(lbUsuarioSesion2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addGap(32, 32, 32)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtUSuarioRegistrarse, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
-                    .addComponent(txtCorreoRegistrarse, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
-                    .addComponent(txtContraseñaRegistrarse))
-                .addGap(96, 96, 96))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(171, 171, 171)
-                .addComponent(btnRegistrarte, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(lbUsuarioSesion2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
+                        .addGap(32, 32, 32)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtUSuarioRegistrarse, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
+                            .addComponent(txtCorreoRegistrarse, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
+                            .addComponent(txtContraseñaRegistrarse))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnVista2)
+                        .addGap(55, 55, 55))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(btnRegistrarte, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(165, 165, 165))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -251,13 +283,14 @@ public class Ventana1 extends javax.swing.JFrame {
                         .addComponent(txtUSuarioRegistrarse, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtCorreoRegistrarse, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(13, 13, 13)
+                .addGap(9, 9, 9)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtContraseñaRegistrarse, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                .addComponent(btnRegistrarte, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41))
+                    .addComponent(txtContraseñaRegistrarse, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVista2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addComponent(btnRegistrarte, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         jTabbedPane4.addTab("REGISTRARSE", jPanel2);
@@ -297,9 +330,10 @@ public class Ventana1 extends javax.swing.JFrame {
 
         // Validaciones previas
 
+        
         if (user.elNombreDeUSuarioEsValidoParaRegistrarse(usuario) && 
-                user.elCorreEsValidoParaRegistrarse(correo) && 
-                user.laContraseñaEsValidoParaRegistrarse(contraseña) ||
+                user.elCorreEsValidoParaRegistrarse(correo) &&
+                encriptar.validarContraseña(contraseña) &&
                 user.correoExisteDeRegistrarse(correo) && 
                 user.nombreDeUSuarioExisteDeRegistrarse(usuario)) { 
             
@@ -307,7 +341,6 @@ public class Ventana1 extends javax.swing.JFrame {
             
             // Agrega el usuario y encripta la contraseña 
             user.agregarRegistrarse(usuario, correo, contraseña);
-
             JOptionPane.showMessageDialog(null, "¡Usuario registrado exitosamente!");
             v2.setDato(txtUSuarioRegistrarse.getText());
             v2.setVisible(true);
@@ -376,18 +409,6 @@ public class Ventana1 extends javax.swing.JFrame {
         txtContraseñaSesion.setText(null);
     }//GEN-LAST:event_btnRecuperarContraseñaSesionActionPerformed
 
-    private void txtContraseñaSesionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtContraseñaSesionKeyReleased
-        if (!txtContraseñaSesion.getText().isEmpty()) {
-            btnIniciarSesion.setEnabled(true);
-        } else {
-            btnIniciarSesion.setEnabled(false);
-        }
-    }//GEN-LAST:event_txtContraseñaSesionKeyReleased
-
-    private void txtContraseñaSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContraseñaSesionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtContraseñaSesionActionPerformed
-
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
 
         Ventana2 v2 = new Ventana2();
@@ -422,6 +443,47 @@ public class Ventana1 extends javax.swing.JFrame {
     private void txtUSuarioSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUSuarioSesionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUSuarioSesionActionPerformed
+
+    private void txtContraseñaSesionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtContraseñaSesionKeyReleased
+        if (!txtContraseñaSesion.getText().isEmpty()) {
+            btnIniciarSesion.setEnabled(true);
+        } else {
+            btnIniciarSesion.setEnabled(false);
+        }    }//GEN-LAST:event_txtContraseñaSesionKeyReleased
+
+    private void btnVistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVistaActionPerformed
+ 
+ 
+        btnVista.addActionListener((ActionEvent e) -> {
+            if (txtContraseñaSesion.getEchoChar() != '\u0000') {
+                txtContraseñaSesion.setEchoChar('\u0000');
+            } else {
+                txtContraseñaSesion.setEchoChar('*');
+            }
+        });
+
+        txtContraseñaSesion.setVisible(true);
+    
+        
+    }//GEN-LAST:event_btnVistaActionPerformed
+
+    private void txtContraseñaSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContraseñaSesionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtContraseñaSesionActionPerformed
+
+    private void btnVista2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVista2ActionPerformed
+        
+        btnVista2.addActionListener((ActionEvent e) -> {
+            if (txtContraseñaRegistrarse.getEchoChar() != '\u0000') {
+                txtContraseñaRegistrarse.setEchoChar('\u0000');
+            } else {
+                txtContraseñaRegistrarse.setEchoChar('*');
+            }
+        });
+
+        txtContraseñaRegistrarse.setVisible(true);
+    
+    }//GEN-LAST:event_btnVista2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -462,17 +524,20 @@ public class Ventana1 extends javax.swing.JFrame {
     private javax.swing.JButton btnIniciarSesion;
     private javax.swing.JButton btnRecuperarContraseñaSesion;
     private javax.swing.JButton btnRegistrarte;
+    private javax.swing.JButton btnVista;
+    private javax.swing.JButton btnVista2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane4;
     private javax.swing.JLabel lbUsuarioSesion;
     private javax.swing.JLabel lbUsuarioSesion2;
     private javax.swing.JPasswordField txtContraseñaRegistrarse;
-    private javax.swing.JTextField txtContraseñaSesion;
+    private javax.swing.JPasswordField txtContraseñaSesion;
     private javax.swing.JTextField txtCorreoRegistrarse;
     private javax.swing.JTextField txtUSuarioRegistrarse;
     private javax.swing.JTextField txtUSuarioSesion;
